@@ -8,4 +8,7 @@ use Illuminate\Database\Eloquent\Model;
 class Project extends Model
 {
     use HasFactory;
+    private mixed $title;
+    private mixed $author;
+    private mixed $description;
 }
