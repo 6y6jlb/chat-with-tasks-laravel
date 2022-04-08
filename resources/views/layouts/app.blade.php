@@ -20,11 +20,11 @@
     <link href="{{ asset('css/app.css') }}" rel="stylesheet">
 </head>
 <body>
-    <div id="app">
+    {{-- <div id="app">
   <example-component />
 </div>
-<script src="{{ mix('/js/app.js') }}"></script>
-{{-- <div id="app">
+<script src="{{ mix('/js/app.js') }}"></script> --}}
+<div id="app">
         <nav class="navbar navbar-expand-md navbar-light bg-white shadow-sm">
             <div class="container">
                 <a class="navbar-brand" href="{{ url('/') }}">
@@ -82,6 +82,6 @@
         <main class="py-4">
             @yield('content')
         </main>
-    </div> --}}
+    </div>
 </body>
 </html>

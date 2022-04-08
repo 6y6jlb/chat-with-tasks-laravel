@@ -19,9 +19,8 @@ class ProjectSeeder extends Seeder
     public function run()
     {
         $users = User::all();
-
         foreach ($users as $user) {
-            DB::table('project_models')->insert([
+            DB::table('projects')->insert([
                 'title' => Str::random(15),
                 'description' => Str::random(55),
                 'author' => $user->name
