@@ -1,23 +1,26 @@
 <template>
-  <h1 @click="increment">{{ this.count }}</h1>
+  <h1>{{ this.count }}</h1>
+  <button :disabled="loading" @click="increment">increment</button>
 </template>
 <script>
 export default {
-data() {
+  data() {
     return {
-
-    }
-},
-computed: {
-    count () {
-      return this.$store.state.count
-    }
-},
+      loading: false,
+    };
+  },
+  computed: {
+    count() {
+      return this.$store.state.count;
+    },
+  },
 
   methods: {
-    increment() {
-      this.$store.commit("increment");
+    async increment() {
+      this.loading = true;
+      await this.$store.dispatch("asyncIncrement");
       console.log(this.$store.state.count);
+      this.loading = false;
     },
   },
 };
