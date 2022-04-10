@@ -7,30 +7,13 @@ use Illuminate\Http\Request;
 
 class ProjectController extends Controller
 {
-    public function table_index()
+ 
+    public function index()
     {
-        $projects = new Project();
-        return view('projects', [
-            'data' => $projects->all()
-        ]);
+        return view('project');
     }
 
-
-    public function project_index($id)
-    {
-        $project = Project::where('id',$id)
-        ->get();
-        return view('project', [
-            'data' => $project[0]
-        ]);
-    }
-
-    public function project_new_card()
-    {
-        return view('add-project');
-    }
-
-    public function project_add(Request $request)
+    public function add(Request $request)
     {
         {
             $valid = $request->validate([

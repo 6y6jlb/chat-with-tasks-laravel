@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\ProjectController;
 use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Facades\Auth;
 
@@ -18,3 +19,11 @@ use Illuminate\Support\Facades\Auth;
 Auth::routes();
 
 Route::get('/', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
+
+// Route::name('projects.')->group(function () {
+//     Route::view('/', [App\Http\Controllers\ProjectsController::class], 'index')->name('projects');
+// });
+
+// Route::name('project.')->group(function () {
+//     Route::get('/{id}', [ProjectController::class], 'index')->middleware('auth')->name('project');
+// });
