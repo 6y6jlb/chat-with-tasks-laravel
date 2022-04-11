@@ -16,9 +16,9 @@ use Illuminate\Support\Facades\Auth;
 */
 
 
-Auth::routes();
+// Auth::routes();
 
-Route::get('/', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
+// Route::get('/', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
 
 // Route::name('projects.')->group(function () {
 //     Route::view('/', [App\Http\Controllers\ProjectsController::class], 'index')->name('projects');
@@ -27,3 +27,11 @@ Route::get('/', [App\Http\Controllers\HomeController::class, 'index'])->name('ho
 // Route::name('project.')->group(function () {
 //     Route::get('/{id}', [ProjectController::class], 'index')->middleware('auth')->name('project');
 // });
+
+Route::get('/',function(){
+    return view('app');
+});
+
+Route::get('/{any}',function(){
+    return view('app');
+});
