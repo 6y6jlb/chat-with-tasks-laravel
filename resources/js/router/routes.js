@@ -9,6 +9,16 @@ export default [
         component: () => import('../pages/About.vue'),
         name: 'about'
     },
+    {
+        path: '/login',
+        component: () => import('../pages/Login.vue'),
+        name: 'login'
+    },
+    {
+        path: '/registration',
+        component: () => import('../pages/Registration.vue'),
+        name: 'registration'
+    },
     // {
     //     path: 'projects',
     //     component: () => import('../pages/Projects.vue'),

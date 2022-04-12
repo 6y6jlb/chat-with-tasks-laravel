@@ -7,7 +7,7 @@ import store from './store';
 
 const app = createApp({});
 
-app.component('app-component', require('./pages/App.vue').default)
+app.component('app-component', require('./components/App.vue').default)
     .use(router)
     .use(store)
     .mount('#app')

@@ -3,6 +3,8 @@
       <a href="/portfolio">me</a>
      <div class="d-flex gap-5">
    <a class=""><router-link :to="{name: 'home'}"> Home </router-link></a>
+          <a><router-link :to="{name: 'login'}"> Login</router-link> </a>
+          <a><router-link :to="{name: 'registration'}"> Rgistration</router-link> </a>
           <a><router-link :to="{name: 'about'}"> About</router-link> </a>
      </div>
        
