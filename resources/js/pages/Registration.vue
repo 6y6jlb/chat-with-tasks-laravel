@@ -1,6 +1,7 @@
 <template>
 <div class="container" style="max-width: 600px" >
-   <basic-auth-form authType='REGISTRATION'></basic-auth-form>
+    <h3>Registration</h3>
+   <basic-auth-form :handler="registration" authType='REGISTRATION'></basic-auth-form>
    </div>
 </template>
 
@@ -8,7 +9,16 @@
 import BasicAuthForm from '../components/auth/BasicAuthForm.vue'
 export default {
     name: 'registration-page',
-    components: {BasicAuthForm}
+    components: {BasicAuthForm},
+
+     methods: {
+      registration() {
+          axios.get('/registration')
+          .then(response=>{
+              console.log(response);
+          })
+      }
+  }
 }
 </script>
 
