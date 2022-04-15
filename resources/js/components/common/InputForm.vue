@@ -5,6 +5,7 @@
       :type=type
       :name=id
       :id=id
+      v-model="value"
       class="form-control"
       :placeholder="placeholder"
       :aria-label=id
@@ -16,7 +17,7 @@
 <script>
 export default {
   name: "input-form",
-  props: ["title", "type", "id", "placeholder"],
+  props: ["title", "type", "id", "placeholder","value"],
 };
 </script>
 

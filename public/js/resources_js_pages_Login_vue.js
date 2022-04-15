@@ -18,6 +18,13 @@ __webpack_require__.r(__webpack_exports__);
     InputForm: _common_InputForm_vue__WEBPACK_IMPORTED_MODULE_0__["default"]
   },
   name: "basic-auth-form",
+  data: function data() {
+    return {
+      email: "",
+      password: "",
+      passwordRepeat: ""
+    };
+  },
   props: {
     authType: {
       type: String,
@@ -43,7 +50,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */ });
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
   name: "input-form",
-  props: ["title", "type", "id", "placeholder"]
+  props: ["title", "type", "id", "placeholder", "value"]
 });
 
 /***/ }),
@@ -66,9 +73,9 @@ __webpack_require__.r(__webpack_exports__);
     BasicAuthForm: _components_auth_BasicAuthForm_vue__WEBPACK_IMPORTED_MODULE_0__["default"]
   },
   methods: {
-    login: function login() {
-      axios.get('/login').then(function (response) {
-        console.log(response);
+    login: function login(formData) {
+      axios.post('api/login', formData).then(function (response) {
+        debugger;
       });
     }
   }
@@ -102,25 +109,36 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
     },
     onSubmit: _cache[0] || (_cache[0] = (0,vue__WEBPACK_IMPORTED_MODULE_0__.withModifiers)(function () {
       return $props.handler && $props.handler.apply($props, arguments);
-    }, ["prevent"])),
-    action: "/login"
+    }, ["prevent"]))
   }, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_input_form, {
     id: "email",
     title: "email",
     type: "text",
+    vaue: $data.email,
+    onInput: $data.email,
     placeholder: "enter your name"
-  }), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_input_form, {
+  }, null, 8
+  /* PROPS */
+  , ["vaue", "onInput"]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_input_form, {
     id: "password",
     title: "password",
     type: "password",
+    vaue: $data.password,
+    onInput: $data.password,
     placeholder: "enter password"
-  }), $props.authType === 'REGISTRATION' ? ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createBlock)(_component_input_form, {
+  }, null, 8
+  /* PROPS */
+  , ["vaue", "onInput"]), $props.authType === 'REGISTRATION' ? ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createBlock)(_component_input_form, {
     key: 0,
     id: "passwordRepeat",
     title: "repeat",
     type: "password",
+    vaue: $data.passwordRepeat,
+    onInput: $data.passwordRepeat,
     placeholder: "repeat password"
-  })) : (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)("v-if", true), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("button", _hoisted_1, (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)(this.authType), 1
+  }, null, 8
+  /* PROPS */
+  , ["vaue", "onInput"])) : (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)("v-if", true), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("button", _hoisted_1, (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)(this.authType), 1
   /* TEXT */
   )], 32
   /* HYDRATE_EVENTS */
@@ -152,17 +170,20 @@ var _hoisted_3 = ["type", "name", "id", "placeholder", "aria-label"];
 function render(_ctx, _cache, $props, $setup, $data, $options) {
   return (0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)("div", _hoisted_1, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("span", _hoisted_2, (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)(this.title), 1
   /* TEXT */
-  ), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("input", {
+  ), (0,vue__WEBPACK_IMPORTED_MODULE_0__.withDirectives)((0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("input", {
     type: $props.type,
     name: $props.id,
     id: $props.id,
+    "onUpdate:modelValue": _cache[0] || (_cache[0] = function ($event) {
+      return $props.value = $event;
+    }),
     "class": "form-control",
     placeholder: $props.placeholder,
     "aria-label": $props.id,
     "aria-describedby": "basic-addon1"
   }, null, 8
   /* PROPS */
-  , _hoisted_3)]);
+  , _hoisted_3), [[vue__WEBPACK_IMPORTED_MODULE_0__.vModelDynamic, $props.value]])]);
 }
 
 /***/ }),

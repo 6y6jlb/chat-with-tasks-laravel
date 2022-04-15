@@ -12,10 +12,10 @@ export default {
   components: { BasicAuthForm },
  
   methods: {
-      login() {
-          axios.get('/login')
+      login(formData) {
+          axios.post('api/login',formData)
           .then(response=>{
-              console.log(response);
+              debugger;
           })
       }
   }
