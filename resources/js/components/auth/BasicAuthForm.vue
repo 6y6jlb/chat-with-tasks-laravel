@@ -1,25 +1,21 @@
 <template>
-  <form
-    class="d-flex flex-column justify-content-center"
-    style="gap: 10px"
-    @submit.prevent="handler"
-  >
+  <form class="d-flex flex-column justify-content-center" style="gap: 10px">
     <input-form
       id="email"
       title="email"
       type="text"
-      v-bind:vaue="email"
-      @input="email"
       placeholder="enter your name"
+      v-bind:value="form.email"
+      v-on:input="form.email = $event.target.value"
     ></input-form>
 
     <input-form
       id="password"
       title="password"
       type="password"
-      v-bind:vaue="password"
-      @input="password"
       placeholder="enter password"
+      v-bind:value="form.password"
+      v-on:input="form.password = $event.target.value"
     ></input-form>
 
     <input-form
@@ -27,12 +23,14 @@
       id="passwordRepeat"
       title="repeat"
       type="password"
-      v-bind:vaue="passwordRepeat"
-      @input="passwordRepeat"
       placeholder="repeat password"
+      v-bind:value="form.passwordRepeat"
+      v-on:input="form.passwordRepeat = $event.target.value"
     ></input-form>
 
-    <button type="submit" class="btn btn-success">{{ this.authType }}</button>
+    <button @click.prevent="$emit('submit', this.form)" class="btn btn-success">
+      {{ authType }}
+    </button>
   </form>
 </template>
 
@@ -43,20 +41,14 @@ export default {
   name: "basic-auth-form",
   data() {
     return {
-      email: "",
-      password: "",
-      passwordRepeat: "",
+      form: {
+        email: "",
+        password: "",
+        passwordRepeat: "",
+      },
     };
   },
-  props: {
-    authType: {
-      type: String,
-      required: true,
-    },
-    handler: {
-      type: Function,
-    },
-  },
+  props: ["authType"],
 };
 </script>
 

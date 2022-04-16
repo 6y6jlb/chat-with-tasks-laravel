@@ -1,7 +1,7 @@
 <template>
   <div class="container" style="max-width: 600px">
     <h3>Login</h3>
-    <basic-auth-form :handler="login" authType="LOGIN"></basic-auth-form>
+    <basic-auth-form @submit="login" authType="LOGIN"></basic-auth-form>
   </div>
 </template>
 
@@ -13,9 +13,13 @@ export default {
  
   methods: {
       login(formData) {
-          axios.post('api/login',formData)
+        const data = {
+          email: formData.email.trim(),
+          password: formData.password.trim(),
+        };
+          axios.post('api/login',data)
           .then(response=>{
-              debugger;
+              console.log(response);
           })
       }
   }

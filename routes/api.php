@@ -1,8 +1,7 @@
 <?php
 
-use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
-use Illuminate\Support\Facades\Auth;
+
 
 /*
 |--------------------------------------------------------------------------
@@ -15,8 +14,20 @@ use Illuminate\Support\Facades\Auth;
 |
 */
 
-Auth::routes();
+// Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
+//     return $request->user();
+// });
 
-Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
-    return $request->user();
-});
+ Route::get('projects',  [App\Http\Controllers\ProjectController::class, 'index']);
+
+ Route::get('project/{id}', [App\Http\Controllers\ProjectController::class,'show']);
+
+ Route::post('project', [App\Http\Controllers\ProjectController::class, 'store']);
+
+ Route::put('project/{id}',  [App\Http\Controllers\ProjectController::class, 'update']);
+
+ Route::delete('project/{id}',  [App\Http\Controllers\ProjectController::class, 'delete']);
+
+
+
+

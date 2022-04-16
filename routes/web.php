@@ -20,10 +20,6 @@ use Illuminate\Support\Facades\Auth;
 
 // Route::get('/', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
 
-// Route::name('projects.')->group(function () {
-//     Route::view('/', [App\Http\Controllers\ProjectsController::class], 'index')->name('projects');
-// });
-
 // Route::name('project.')->group(function () {
 //     Route::get('/{id}', [ProjectController::class], 'index')->middleware('auth')->name('project');
 // });

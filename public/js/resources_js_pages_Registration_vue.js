@@ -20,20 +20,14 @@ __webpack_require__.r(__webpack_exports__);
   name: "basic-auth-form",
   data: function data() {
     return {
-      email: "",
-      password: "",
-      passwordRepeat: ""
+      form: {
+        email: "",
+        password: "",
+        passwordRepeat: ""
+      }
     };
   },
-  props: {
-    authType: {
-      type: String,
-      required: true
-    },
-    handler: {
-      type: Function
-    }
-  }
+  props: ["authType"]
 });
 
 /***/ }),
@@ -50,7 +44,17 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */ });
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
   name: "input-form",
-  props: ["title", "type", "id", "placeholder", "value"]
+  props: ["title", "type", "id", "placeholder", "value"],
+  data: function data() {
+    return {
+      content: this.value
+    };
+  },
+  methods: {
+    handleInput: function handleInput(e) {
+      this.$emit('input', this.content);
+    }
+  }
 });
 
 /***/ }),
@@ -96,53 +100,58 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var vue__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! vue */ "./node_modules/vue/dist/vue.esm-bundler.js");
 
 var _hoisted_1 = {
-  type: "submit",
-  "class": "btn btn-success"
+  "class": "d-flex flex-column justify-content-center",
+  style: {
+    "gap": "10px"
+  }
 };
 function render(_ctx, _cache, $props, $setup, $data, $options) {
+  var _this = this;
+
   var _component_input_form = (0,vue__WEBPACK_IMPORTED_MODULE_0__.resolveComponent)("input-form");
 
-  return (0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)("form", {
-    "class": "d-flex flex-column justify-content-center",
-    style: {
-      "gap": "10px"
-    },
-    onSubmit: _cache[0] || (_cache[0] = (0,vue__WEBPACK_IMPORTED_MODULE_0__.withModifiers)(function () {
-      return $props.handler && $props.handler.apply($props, arguments);
-    }, ["prevent"]))
-  }, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_input_form, {
+  return (0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)("form", _hoisted_1, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_input_form, {
     id: "email",
     title: "email",
     type: "text",
-    vaue: $data.email,
-    onInput: $data.email,
-    placeholder: "enter your name"
+    placeholder: "enter your name",
+    value: $data.form.email,
+    onInput: _cache[0] || (_cache[0] = function ($event) {
+      return $data.form.email = $event.target.value;
+    })
   }, null, 8
   /* PROPS */
-  , ["vaue", "onInput"]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_input_form, {
+  , ["value"]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_input_form, {
     id: "password",
     title: "password",
     type: "password",
-    vaue: $data.password,
-    onInput: $data.password,
-    placeholder: "enter password"
+    placeholder: "enter password",
+    value: $data.form.password,
+    onInput: _cache[1] || (_cache[1] = function ($event) {
+      return $data.form.password = $event.target.value;
+    })
   }, null, 8
   /* PROPS */
-  , ["vaue", "onInput"]), $props.authType === 'REGISTRATION' ? ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createBlock)(_component_input_form, {
+  , ["value"]), $props.authType === 'REGISTRATION' ? ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createBlock)(_component_input_form, {
     key: 0,
     id: "passwordRepeat",
     title: "repeat",
     type: "password",
-    vaue: $data.passwordRepeat,
-    onInput: $data.passwordRepeat,
-    placeholder: "repeat password"
+    placeholder: "repeat password",
+    value: $data.form.passwordRepeat,
+    onInput: _cache[2] || (_cache[2] = function ($event) {
+      return $data.form.passwordRepeat = $event.target.value;
+    })
   }, null, 8
   /* PROPS */
-  , ["vaue", "onInput"])) : (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)("v-if", true), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("button", _hoisted_1, (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)(this.authType), 1
+  , ["value"])) : (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)("v-if", true), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("button", {
+    onClick: _cache[3] || (_cache[3] = (0,vue__WEBPACK_IMPORTED_MODULE_0__.withModifiers)(function ($event) {
+      return _ctx.$emit('submit', _this.form);
+    }, ["prevent"])),
+    "class": "btn btn-success"
+  }, (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)($props.authType), 1
   /* TEXT */
-  )], 32
-  /* HYDRATE_EVENTS */
-  );
+  )]);
 }
 
 /***/ }),
@@ -166,24 +175,24 @@ var _hoisted_2 = {
   "class": "input-group-text",
   id: "basic-addon1"
 };
-var _hoisted_3 = ["type", "name", "id", "placeholder", "aria-label"];
+var _hoisted_3 = ["id", "name", "aria-label", "type", "placeholder"];
 function render(_ctx, _cache, $props, $setup, $data, $options) {
   return (0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)("div", _hoisted_1, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("span", _hoisted_2, (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)(this.title), 1
   /* TEXT */
-  ), (0,vue__WEBPACK_IMPORTED_MODULE_0__.withDirectives)((0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("input", {
-    type: $props.type,
-    name: $props.id,
-    id: $props.id,
-    "onUpdate:modelValue": _cache[0] || (_cache[0] = function ($event) {
-      return $props.value = $event;
+  ), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("input", {
+    onInput: _cache[0] || (_cache[0] = function () {
+      return $options.handleInput && $options.handleInput.apply($options, arguments);
     }),
+    id: $props.id,
+    name: $props.id,
+    "aria-label": $props.id,
+    type: $props.type,
     "class": "form-control",
     placeholder: $props.placeholder,
-    "aria-label": $props.id,
     "aria-describedby": "basic-addon1"
-  }, null, 8
-  /* PROPS */
-  , _hoisted_3), [[vue__WEBPACK_IMPORTED_MODULE_0__.vModelDynamic, $props.value]])]);
+  }, null, 40
+  /* PROPS, HYDRATE_EVENTS */
+  , _hoisted_3)]);
 }
 
 /***/ }),
