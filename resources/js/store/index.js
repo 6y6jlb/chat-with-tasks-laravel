@@ -1,14 +1,12 @@
 import { createStore } from 'vuex';
+import userStore from './userStore';
+import exampleStore from './exampleStore';
+import notificationStore from './notificationStore';
 
-export const store = createStore({
-  state () {
-    return {
-      count: 1
-    }
-  },
-  mutations: {
-   increment (state) {
-     state.count++
-   }
+export default createStore({
+ modules: {
+   user: userStore,
+   example: exampleStore,
+   notification: notificationStore,
  }
 })
