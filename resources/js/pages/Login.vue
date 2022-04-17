@@ -12,15 +12,13 @@ export default {
   components: { BasicAuthForm },
  
   methods: {
-      login(formData) {
+      async login(formData) {
         const data = {
           email: formData.email.trim(),
           password: formData.password.trim(),
         };
-          axios.post('api/login',data)
-          .then(response=>{
-              console.log(response);
-          })
+        await this.$store.dispatch("user/fetchUser", data);
+          console.log(this.$store.state.user.user);
       }
   }
 };

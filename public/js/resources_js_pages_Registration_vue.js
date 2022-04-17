@@ -27,7 +27,24 @@ __webpack_require__.r(__webpack_exports__);
       }
     };
   },
-  props: ["authType"]
+  props: ["authType"],
+  methods: {
+    updateEmail: function updateEmail(event) {
+      var _event$target;
+
+      this.form.email = (_event$target = event.target) === null || _event$target === void 0 ? void 0 : _event$target.value;
+    },
+    updatePassword: function updatePassword(event) {
+      var _event$target2;
+
+      this.form.password = (_event$target2 = event.target) === null || _event$target2 === void 0 ? void 0 : _event$target2.value;
+    },
+    updateRepeatedPassword: function updateRepeatedPassword(event) {
+      var _event$target3;
+
+      this.form.passwordRepeat = (_event$target3 = event.target) === null || _event$target3 === void 0 ? void 0 : _event$target3.value;
+    }
+  }
 });
 
 /***/ }),
@@ -116,36 +133,30 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
     type: "text",
     placeholder: "enter your name",
     value: $data.form.email,
-    onInput: _cache[0] || (_cache[0] = function ($event) {
-      return $data.form.email = $event.target.value;
-    })
+    onInput: $options.updateEmail
   }, null, 8
   /* PROPS */
-  , ["value"]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_input_form, {
+  , ["value", "onInput"]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_input_form, {
     id: "password",
     title: "password",
     type: "password",
     placeholder: "enter password",
     value: $data.form.password,
-    onInput: _cache[1] || (_cache[1] = function ($event) {
-      return $data.form.password = $event.target.value;
-    })
+    onInput: $options.updatePassword
   }, null, 8
   /* PROPS */
-  , ["value"]), $props.authType === 'REGISTRATION' ? ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createBlock)(_component_input_form, {
+  , ["value", "onInput"]), $props.authType === 'REGISTRATION' ? ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createBlock)(_component_input_form, {
     key: 0,
     id: "passwordRepeat",
     title: "repeat",
     type: "password",
     placeholder: "repeat password",
     value: $data.form.passwordRepeat,
-    onInput: _cache[2] || (_cache[2] = function ($event) {
-      return $data.form.passwordRepeat = $event.target.value;
-    })
+    onInput: $options.updateRepeatedPassword
   }, null, 8
   /* PROPS */
-  , ["value"])) : (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)("v-if", true), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("button", {
-    onClick: _cache[3] || (_cache[3] = (0,vue__WEBPACK_IMPORTED_MODULE_0__.withModifiers)(function ($event) {
+  , ["value", "onInput"])) : (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)("v-if", true), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("button", {
+    onClick: _cache[0] || (_cache[0] = (0,vue__WEBPACK_IMPORTED_MODULE_0__.withModifiers)(function ($event) {
       return _ctx.$emit('submit', _this.form);
     }, ["prevent"])),
     "class": "btn btn-success"

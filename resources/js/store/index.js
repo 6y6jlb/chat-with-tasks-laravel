@@ -1,29 +1,12 @@
 import { createStore } from 'vuex';
+import userStore from './userStore';
+import exampleStore from './exampleStore';
+import notificationStore from './notificationStore';
 
 export default createStore({
-  state () {
-    return {
-      count: 1,
-      projects: []
-    }
-  },
-  mutations: {
-   increment (state) {
-     state.count++
-   },
-   addProject (state, newProject) {
-      state.projects.push (newProject);
-    }
- },
- getters: {},
- actions: {
-    asyncIncrement({commit}) {
-       return new Promise((res, rej)=>{
-          setTimeout(()=>{
-            commit('increment');
-            res();
-          },1000)
-       })
-    }
+ modules: {
+   user: userStore,
+   example: exampleStore,
+   notification: notificationStore,
  }
 })

@@ -11,15 +11,15 @@ export default {
   },
   computed: {
     count() {
-      return this.$store.state.count;
+      return this.$store.state.example.count;
     },
   },
 
   methods: {
     async increment() {
       this.loading = true;
-      await this.$store.dispatch("asyncIncrement");
-      console.log(this.$store.state.count);
+      await this.$store.dispatch("example/asyncIncrement");
+      console.log(this.$store.state.example.count);
       this.loading = false;
     },
   },

@@ -6,7 +6,7 @@
       type="text"
       placeholder="enter your name"
       v-bind:value="form.email"
-      v-on:input="form.email = $event.target.value"
+      v-on:input="updateEmail"
     ></input-form>
 
     <input-form
@@ -15,7 +15,7 @@
       type="password"
       placeholder="enter password"
       v-bind:value="form.password"
-      v-on:input="form.password = $event.target.value"
+      v-on:input="updatePassword"
     ></input-form>
 
     <input-form
@@ -25,7 +25,7 @@
       type="password"
       placeholder="repeat password"
       v-bind:value="form.passwordRepeat"
-      v-on:input="form.passwordRepeat = $event.target.value"
+      v-on:input="updateRepeatedPassword"
     ></input-form>
 
     <button @click.prevent="$emit('submit', this.form)" class="btn btn-success">
@@ -49,6 +49,19 @@ export default {
     };
   },
   props: ["authType"],
+  
+  methods: {
+    updateEmail(event) {
+      this.form.email = event.target?.value;
+    },
+    updatePassword(event) {
+      this.form.password = event.target?.value;
+    },
+    updateRepeatedPassword(event) {
+      this.form.passwordRepeat = event.target?.value;
+    }
+    
+  }
 };
 </script>
 
