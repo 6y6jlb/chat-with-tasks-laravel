@@ -7,6 +7,9 @@ use Illuminate\Database\Eloquent\Model;
 
 class Project extends Model
 {
+
+    protected $filable = ['title','description'];
+
     use HasFactory;
     private mixed $title;
     private mixed $author;
