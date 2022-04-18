@@ -18,7 +18,6 @@ export default {
 
      },
      actions: {
-       
         async fetchUser({ dispatch, commit, getters, rootGetters },formData) {
             try {
                 commit('setLoading', true);

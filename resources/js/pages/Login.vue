@@ -6,21 +6,28 @@
 </template>
 
 <script>
+import { nextTick } from "@vue/runtime-core";
 import BasicAuthForm from "../components/auth/BasicAuthForm.vue";
 export default {
   name: "login-page",
   components: { BasicAuthForm },
- 
+  computed: {
+    isAuth() {
+      return !!this.$store.state.essence?.user;
+    },
+  },
   methods: {
-      async login(formData) {
-        const data = {
-          email: formData.email.trim(),
-          password: formData.password.trim(),
-        };
-        await this.$store.dispatch("user/fetchUser", data);
-          console.log(this.$store.state.user.user);
-      }
-  }
+    async login(formData) {
+      const data = {
+        email: formData.email.trim(),
+        password: formData.password.trim(),
+      };
+      await this.$store.dispatch("essence/fetchUser", data);
+      this.$router.push({ name: "dashboard" });
+      await nextTick();
+      this.$router.push({ name: this.isAuth ? "dashboard" : "home" });
+    },
+  },
 };
 </script>
 

@@ -1,29 +1,15 @@
 export default [
     {
-        path: '/',
-        component: () => import('../pages/Home.vue'),
-        name: 'home'
-    },
-    {
         path: '/about',
         component: () => import('../pages/About.vue'),
-        name: 'about'
+        name: 'about',
     },
     {
-        path: '/login',
-        component: () => import('../pages/Login.vue'),
-        name: 'login'
-    },
-    {
-        path: '/registration',
-        component: () => import('../pages/Registration.vue'),
-        name: 'registration'
-    },
-    {
-        path: '/dashboard',
+        path: '/',
         component: () => import('../pages/Dashboard.vue'),
-        name: 'dashboard'
+        name: 'dashboard',
     },
+    
     // {
     //     path: 'projects',
     //     component: () => import('../pages/Projects.vue'),
