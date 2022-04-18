@@ -19,6 +19,11 @@ export default [
         component: () => import('../pages/Registration.vue'),
         name: 'registration'
     },
+    {
+        path: '/dashboard',
+        component: () => import('../pages/Dashboard.vue'),
+        name: 'dashboard'
+    },
     // {
     //     path: 'projects',
     //     component: () => import('../pages/Projects.vue'),

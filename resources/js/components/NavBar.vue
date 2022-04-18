@@ -5,6 +5,7 @@
    <a class=""><router-link :to="{name: 'home'}"> Home </router-link></a>
           <a><router-link :to="{name: 'login'}"> Login</router-link> </a>
           <a><router-link :to="{name: 'registration'}"> Rgistration</router-link> </a>
+          <a><router-link :to="{name: 'dashboard'}"> dashboard</router-link> </a>
           <a><router-link :to="{name: 'about'}"> About</router-link> </a>
      </div>
        

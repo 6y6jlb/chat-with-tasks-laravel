@@ -22932,7 +22932,9 @@ var _hoisted_6 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createTextVNod
 
 var _hoisted_7 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createTextVNode)(" Rgistration");
 
-var _hoisted_8 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createTextVNode)(" About");
+var _hoisted_8 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createTextVNode)(" dashboard");
+
+var _hoisted_9 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createTextVNode)(" About");
 
 function render(_ctx, _cache, $props, $setup, $data, $options) {
   var _component_router_link = (0,vue__WEBPACK_IMPORTED_MODULE_0__.resolveComponent)("router-link");
@@ -22972,11 +22974,22 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
 
   })]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("a", null, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_router_link, {
     to: {
-      name: 'about'
+      name: 'dashboard'
     }
   }, {
     "default": (0,vue__WEBPACK_IMPORTED_MODULE_0__.withCtx)(function () {
       return [_hoisted_8];
+    }),
+    _: 1
+    /* STABLE */
+
+  })]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("a", null, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_router_link, {
+    to: {
+      name: 'about'
+    }
+  }, {
+    "default": (0,vue__WEBPACK_IMPORTED_MODULE_0__.withCtx)(function () {
+      return [_hoisted_9];
     }),
     _: 1
     /* STABLE */
@@ -23100,6 +23113,12 @@ __webpack_require__.r(__webpack_exports__);
     return __webpack_require__.e(/*! import() */ "resources_js_pages_Registration_vue").then(__webpack_require__.bind(__webpack_require__, /*! ../pages/Registration.vue */ "./resources/js/pages/Registration.vue"));
   },
   name: 'registration'
+}, {
+  path: '/dashboard',
+  component: function component() {
+    return __webpack_require__.e(/*! import() */ "resources_js_pages_Dashboard_vue").then(__webpack_require__.bind(__webpack_require__, /*! ../pages/Dashboard.vue */ "./resources/js/pages/Dashboard.vue"));
+  },
+  name: 'dashboard'
 } // {
 //     path: 'projects',
 //     component: () => import('../pages/Projects.vue'),
@@ -23218,7 +23237,7 @@ function _arrayLikeToArray(arr, len) { if (len == null || len > arr.length) len 
   },
   mutations: {
     setError: function setError(state, error) {
-      state.errors = [].concat(_toConsumableArray(state.erros), [error]);
+      state.errors = [].concat(_toConsumableArray(state.errors), [error]);
     },
     setMessage: function setMessage(state, message) {
       state.message = [].concat(_toConsumableArray(state.messages), [message]);
@@ -23269,13 +23288,13 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
   actions: {
     fetchUser: function fetchUser(_ref, formData) {
       return _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default().mark(function _callee() {
-        var commit, response, _response$data, token, user, message, errors, _message;
+        var dispatch, commit, getters, rootGetters, response, _response$data, token, user, message, errors, _message;
 
         return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default().wrap(function _callee$(_context) {
           while (1) {
             switch (_context.prev = _context.next) {
               case 0:
-                commit = _ref.commit;
+                dispatch = _ref.dispatch, commit = _ref.commit, getters = _ref.getters, rootGetters = _ref.rootGetters;
                 _context.prev = 1;
                 commit('setLoading', true);
                 _context.next = 5;
@@ -23285,29 +23304,34 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
                 response = _context.sent;
                 _response$data = response.data, token = _response$data.token, user = _response$data.user, message = _response$data.message;
                 commit('setUser', user);
-                commit('notification/setMessage', message);
-                console.log(response);
-                _context.next = 17;
+                commit('notification/setMessage', message, {
+                  root: true
+                });
+                _context.next = 16;
                 break;
 
-              case 12:
-                _context.prev = 12;
+              case 11:
+                _context.prev = 11;
                 _context.t0 = _context["catch"](1);
                 errors = _context.t0.errors, _message = _context.t0.message;
-                commit('notification/setError', _message);
-                commit('notification/setError', errors);
+                commit('notification/setError', errors, {
+                  root: true
+                });
+                commit('notification/setMessage', _message, {
+                  root: true
+                });
 
-              case 17:
-                _context.prev = 17;
+              case 16:
+                _context.prev = 16;
                 commit('setLoading', false);
-                return _context.finish(17);
+                return _context.finish(16);
 
-              case 20:
+              case 19:
               case "end":
                 return _context.stop();
             }
           }
-        }, _callee, null, [[1, 12, 17, 20]]);
+        }, _callee, null, [[1, 11, 16, 19]]);
       }))();
     }
   }
@@ -51981,7 +52005,7 @@ var index = {
 /******/ 		// This function allow to reference async chunks
 /******/ 		__webpack_require__.u = (chunkId) => {
 /******/ 			// return url for filenames not based on template
-/******/ 			if ({"resources_js_pages_Home_vue":1,"resources_js_pages_About_vue":1,"resources_js_pages_Login_vue":1,"resources_js_pages_Registration_vue":1}[chunkId]) return "js/" + chunkId + ".js";
+/******/ 			if ({"resources_js_pages_Home_vue":1,"resources_js_pages_About_vue":1,"resources_js_pages_Login_vue":1,"resources_js_pages_Registration_vue":1,"resources_js_pages_Dashboard_vue":1}[chunkId]) return "js/" + chunkId + ".js";
 /******/ 			// return url for filenames based on template
 /******/ 			return undefined;
 /******/ 		};
