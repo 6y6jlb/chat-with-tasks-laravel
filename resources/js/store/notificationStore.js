@@ -8,7 +8,7 @@ export default {
   },
   mutations: {
     setError(state,error) {
-      state.errors = [...state.erros, error];
+      state.errors = [...state.errors, error];
     },
     setMessage(state,message) {
       state.message = [...state.messages, message];

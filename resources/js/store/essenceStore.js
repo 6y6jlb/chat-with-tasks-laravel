@@ -18,18 +18,17 @@ export default {
 
      },
      actions: {
-        async fetchUser({commit},formData) {
+        async fetchUser({ dispatch, commit, getters, rootGetters },formData) {
             try {
                 commit('setLoading', true);
                 const response = await axios.post('api/auth/login',formData);
                 const {token, user, message} = response.data;
                 commit('setUser', user);
-                commit('notification/setMessage', message);
-                console.log(response);
+                commit('notification/setMessage', message,{ root: true });
             } catch (error) {
                 const {errors, message} = error;
-                commit('notification/setError', message);
-                commit('notification/setError', errors);
+                commit('notification/setError', errors,{ root: true });
+                commit('notification/setMessage', message,{ root: true });
             } finally {
                 commit('setLoading', false);
             }
