@@ -20,4 +20,9 @@ export default [
         component: () => import('../pages/About.vue'),
         name: 'about'
     },
+    {
+        path: '/chat',
+        component: () => import('../pages/Chat.vue'),
+        name: 'chat'
+    },
 ];

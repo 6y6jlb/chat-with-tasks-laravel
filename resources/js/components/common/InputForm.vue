@@ -11,7 +11,9 @@
       :placeholder="placeholder"
       aria-describedby="basic-addon1"
     />
+     <slot></slot>
   </div>
+ 
 </template>
 
 <script>
