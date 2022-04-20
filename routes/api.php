@@ -41,5 +41,7 @@ Route::group(['prefix'=>'auth'], function() {
  Route::delete('project/{id}',  [App\Http\Controllers\ProjectController::class, 'delete']);
 
 
+ Route::post('/message', 'MessageController@broadcast');
+
 
 
