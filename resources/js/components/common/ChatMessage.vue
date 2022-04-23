@@ -20,6 +20,7 @@
 <script>
 export default {
   name: "chat-message",
+  props: ['message']
 };
 </script>
 

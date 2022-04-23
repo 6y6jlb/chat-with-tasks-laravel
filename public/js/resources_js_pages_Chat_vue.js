@@ -12,7 +12,8 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
 /* harmony export */ });
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
-  name: "chat-message"
+  name: "chat-message",
+  props: ['message']
 });
 
 /***/ }),
@@ -82,6 +83,45 @@ __webpack_require__.r(__webpack_exports__);
     MainTitle: _components_common_MainTitle_vue__WEBPACK_IMPORTED_MODULE_2__["default"],
     ChatMessage: _components_common_ChatMessage_vue__WEBPACK_IMPORTED_MODULE_0__["default"],
     InputForm: _components_common_InputForm_vue__WEBPACK_IMPORTED_MODULE_1__["default"]
+  },
+  data: function data() {
+    return {
+      userId: Math.random().toString(36).slice(-5),
+      messages: [],
+      newMessage: ''
+    };
+  },
+  mounted: function mounted() {
+    var _this = this;
+
+    Echo.channel('chat').listen('NewChatMessage', function (e) {
+      if (e.user != _this.userId) {
+        _this.messages.push({
+          text: e.message,
+          user: e.user
+        });
+      }
+    });
+  },
+  methods: {
+    submit: function submit() {
+      var _this2 = this;
+
+      // axios.post(`${process.env.MIX_WEBSOCKET_SERVER_BASE_URL}/api/message`, {
+      axios.post("/api/message", {
+        user: this.userId,
+        message: this.newMessage
+      }).then(function (response) {
+        _this2.messages.push({
+          text: _this2.newMessage,
+          user: _this2.userId
+        });
+
+        _this2.newMessage = '';
+      }, function (error) {
+        console.log(error);
+      });
+    }
   }
 });
 
@@ -239,7 +279,16 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
   return (0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)("div", _hoisted_1, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_main_title, {
     title: "chat",
     description: "some shit"
-  }), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_2, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_chat_message), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_chat_message), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_chat_message)]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_input_form, {
+  }), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_2, [((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(true), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)(vue__WEBPACK_IMPORTED_MODULE_0__.Fragment, null, (0,vue__WEBPACK_IMPORTED_MODULE_0__.renderList)($data.messages, function (message) {
+    return (0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createBlock)(_component_chat_message, {
+      key: message.id,
+      message: message
+    }, null, 8
+    /* PROPS */
+    , ["message"]);
+  }), 128
+  /* KEYED_FRAGMENT */
+  ))]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_input_form, {
     id: "message",
     name: "message",
     type: "text",
@@ -273,13 +322,13 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */ });
 /* harmony import */ var _ChatMessage_vue_vue_type_template_id_a53d5154__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./ChatMessage.vue?vue&type=template&id=a53d5154 */ "./resources/js/components/common/ChatMessage.vue?vue&type=template&id=a53d5154");
 /* harmony import */ var _ChatMessage_vue_vue_type_script_lang_js__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./ChatMessage.vue?vue&type=script&lang=js */ "./resources/js/components/common/ChatMessage.vue?vue&type=script&lang=js");
-/* harmony import */ var _home_alexb_projects_chat_with_tasks_laravel_node_modules_vue_loader_dist_exportHelper_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./node_modules/vue-loader/dist/exportHelper.js */ "./node_modules/vue-loader/dist/exportHelper.js");
+/* harmony import */ var _home_alex_projects_chat_with_tasks_laravel_node_modules_vue_loader_dist_exportHelper_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./node_modules/vue-loader/dist/exportHelper.js */ "./node_modules/vue-loader/dist/exportHelper.js");
 
 
 
 
 ;
-const __exports__ = /*#__PURE__*/(0,_home_alexb_projects_chat_with_tasks_laravel_node_modules_vue_loader_dist_exportHelper_js__WEBPACK_IMPORTED_MODULE_2__["default"])(_ChatMessage_vue_vue_type_script_lang_js__WEBPACK_IMPORTED_MODULE_1__["default"], [['render',_ChatMessage_vue_vue_type_template_id_a53d5154__WEBPACK_IMPORTED_MODULE_0__.render],['__file',"resources/js/components/common/ChatMessage.vue"]])
+const __exports__ = /*#__PURE__*/(0,_home_alex_projects_chat_with_tasks_laravel_node_modules_vue_loader_dist_exportHelper_js__WEBPACK_IMPORTED_MODULE_2__["default"])(_ChatMessage_vue_vue_type_script_lang_js__WEBPACK_IMPORTED_MODULE_1__["default"], [['render',_ChatMessage_vue_vue_type_template_id_a53d5154__WEBPACK_IMPORTED_MODULE_0__.render],['__file',"resources/js/components/common/ChatMessage.vue"]])
 /* hot reload */
 if (false) {}
 
@@ -300,13 +349,13 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */ });
 /* harmony import */ var _InputForm_vue_vue_type_template_id_4cdee1b5__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./InputForm.vue?vue&type=template&id=4cdee1b5 */ "./resources/js/components/common/InputForm.vue?vue&type=template&id=4cdee1b5");
 /* harmony import */ var _InputForm_vue_vue_type_script_lang_js__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./InputForm.vue?vue&type=script&lang=js */ "./resources/js/components/common/InputForm.vue?vue&type=script&lang=js");
-/* harmony import */ var _home_alexb_projects_chat_with_tasks_laravel_node_modules_vue_loader_dist_exportHelper_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./node_modules/vue-loader/dist/exportHelper.js */ "./node_modules/vue-loader/dist/exportHelper.js");
+/* harmony import */ var _home_alex_projects_chat_with_tasks_laravel_node_modules_vue_loader_dist_exportHelper_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./node_modules/vue-loader/dist/exportHelper.js */ "./node_modules/vue-loader/dist/exportHelper.js");
 
 
 
 
 ;
-const __exports__ = /*#__PURE__*/(0,_home_alexb_projects_chat_with_tasks_laravel_node_modules_vue_loader_dist_exportHelper_js__WEBPACK_IMPORTED_MODULE_2__["default"])(_InputForm_vue_vue_type_script_lang_js__WEBPACK_IMPORTED_MODULE_1__["default"], [['render',_InputForm_vue_vue_type_template_id_4cdee1b5__WEBPACK_IMPORTED_MODULE_0__.render],['__file',"resources/js/components/common/InputForm.vue"]])
+const __exports__ = /*#__PURE__*/(0,_home_alex_projects_chat_with_tasks_laravel_node_modules_vue_loader_dist_exportHelper_js__WEBPACK_IMPORTED_MODULE_2__["default"])(_InputForm_vue_vue_type_script_lang_js__WEBPACK_IMPORTED_MODULE_1__["default"], [['render',_InputForm_vue_vue_type_template_id_4cdee1b5__WEBPACK_IMPORTED_MODULE_0__.render],['__file',"resources/js/components/common/InputForm.vue"]])
 /* hot reload */
 if (false) {}
 
@@ -327,13 +376,13 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */ });
 /* harmony import */ var _MainTitle_vue_vue_type_template_id_e8a194b4__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./MainTitle.vue?vue&type=template&id=e8a194b4 */ "./resources/js/components/common/MainTitle.vue?vue&type=template&id=e8a194b4");
 /* harmony import */ var _MainTitle_vue_vue_type_script_lang_js__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./MainTitle.vue?vue&type=script&lang=js */ "./resources/js/components/common/MainTitle.vue?vue&type=script&lang=js");
-/* harmony import */ var _home_alexb_projects_chat_with_tasks_laravel_node_modules_vue_loader_dist_exportHelper_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./node_modules/vue-loader/dist/exportHelper.js */ "./node_modules/vue-loader/dist/exportHelper.js");
+/* harmony import */ var _home_alex_projects_chat_with_tasks_laravel_node_modules_vue_loader_dist_exportHelper_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./node_modules/vue-loader/dist/exportHelper.js */ "./node_modules/vue-loader/dist/exportHelper.js");
 
 
 
 
 ;
-const __exports__ = /*#__PURE__*/(0,_home_alexb_projects_chat_with_tasks_laravel_node_modules_vue_loader_dist_exportHelper_js__WEBPACK_IMPORTED_MODULE_2__["default"])(_MainTitle_vue_vue_type_script_lang_js__WEBPACK_IMPORTED_MODULE_1__["default"], [['render',_MainTitle_vue_vue_type_template_id_e8a194b4__WEBPACK_IMPORTED_MODULE_0__.render],['__file',"resources/js/components/common/MainTitle.vue"]])
+const __exports__ = /*#__PURE__*/(0,_home_alex_projects_chat_with_tasks_laravel_node_modules_vue_loader_dist_exportHelper_js__WEBPACK_IMPORTED_MODULE_2__["default"])(_MainTitle_vue_vue_type_script_lang_js__WEBPACK_IMPORTED_MODULE_1__["default"], [['render',_MainTitle_vue_vue_type_template_id_e8a194b4__WEBPACK_IMPORTED_MODULE_0__.render],['__file',"resources/js/components/common/MainTitle.vue"]])
 /* hot reload */
 if (false) {}
 
@@ -354,13 +403,13 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */ });
 /* harmony import */ var _Chat_vue_vue_type_template_id_18c4d261__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./Chat.vue?vue&type=template&id=18c4d261 */ "./resources/js/pages/Chat.vue?vue&type=template&id=18c4d261");
 /* harmony import */ var _Chat_vue_vue_type_script_lang_js__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./Chat.vue?vue&type=script&lang=js */ "./resources/js/pages/Chat.vue?vue&type=script&lang=js");
-/* harmony import */ var _home_alexb_projects_chat_with_tasks_laravel_node_modules_vue_loader_dist_exportHelper_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./node_modules/vue-loader/dist/exportHelper.js */ "./node_modules/vue-loader/dist/exportHelper.js");
+/* harmony import */ var _home_alex_projects_chat_with_tasks_laravel_node_modules_vue_loader_dist_exportHelper_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./node_modules/vue-loader/dist/exportHelper.js */ "./node_modules/vue-loader/dist/exportHelper.js");
 
 
 
 
 ;
-const __exports__ = /*#__PURE__*/(0,_home_alexb_projects_chat_with_tasks_laravel_node_modules_vue_loader_dist_exportHelper_js__WEBPACK_IMPORTED_MODULE_2__["default"])(_Chat_vue_vue_type_script_lang_js__WEBPACK_IMPORTED_MODULE_1__["default"], [['render',_Chat_vue_vue_type_template_id_18c4d261__WEBPACK_IMPORTED_MODULE_0__.render],['__file',"resources/js/pages/Chat.vue"]])
+const __exports__ = /*#__PURE__*/(0,_home_alex_projects_chat_with_tasks_laravel_node_modules_vue_loader_dist_exportHelper_js__WEBPACK_IMPORTED_MODULE_2__["default"])(_Chat_vue_vue_type_script_lang_js__WEBPACK_IMPORTED_MODULE_1__["default"], [['render',_Chat_vue_vue_type_template_id_18c4d261__WEBPACK_IMPORTED_MODULE_0__.render],['__file',"resources/js/pages/Chat.vue"]])
 /* hot reload */
 if (false) {}
 

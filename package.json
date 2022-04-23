@@ -22,7 +22,7 @@
         "vue-loader": "^17.0.0"
     },
     "dependencies": {
-        "laravel-echo": "^1.11.5",
+        "laravel-echo": "^1.11.7",
         "pusher-js": "^7.0.6",
         "vue": "^3.2.31",
         "vue-router": "^4.0.14",
