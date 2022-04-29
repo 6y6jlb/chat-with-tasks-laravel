@@ -40,7 +40,7 @@ export default {
     };
   },
   mounted() {
-    Echo.channel("chat").listen("NewChatMessage", (e) => {
+    window.Echo.channel("chat").listen("NewChatMessage", (e) => {
       console.log(e);
       if (e.user != this.userId) {
         console.log(e);
@@ -54,12 +54,13 @@ export default {
   methods: {
     submit() {
       axios
-        .post(`api/messvage`, {
+        .post(`api/message`, {
           user: this.userId,
           message: this.newMessage,
         })
         .then(
           (response) => {
+            console.dir(response)
             this.messages.push({
               text: this.newMessage,
               user: this.userId,

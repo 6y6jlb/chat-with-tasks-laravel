@@ -94,7 +94,7 @@ __webpack_require__.r(__webpack_exports__);
   mounted: function mounted() {
     var _this = this;
 
-    Echo.channel("chat").listen("NewChatMessage", function (e) {
+    window.Echo.channel("chat").listen("NewChatMessage", function (e) {
       console.log(e);
 
       if (e.user != _this.userId) {
@@ -111,10 +111,12 @@ __webpack_require__.r(__webpack_exports__);
     submit: function submit() {
       var _this2 = this;
 
-      axios.post("api/messvage", {
+      axios.post("api/message", {
         user: this.userId,
         message: this.newMessage
       }).then(function (response) {
+        console.dir(response);
+
         _this2.messages.push({
           text: _this2.newMessage,
           user: _this2.userId
