@@ -9,14 +9,21 @@
       ></chat-message>
     </div>
     <input-form
-      :value="newMessage"
+      :value="this.newMessage"
       @input="updateNewMessage"
       id="newMessage"
       name="newMessage"
       type="text"
       title="text"
+      placeholder="message"
     >
-      <button @click.prevent="submit" class="btn btn-success">send it</button>
+      <button
+        :disabled="!this.newMessage.trim()"
+        @click.prevent="submit"
+        class="btn btn-success"
+      >
+        send it
+      </button>
     </input-form>
   </div>
 </template>
@@ -34,14 +41,25 @@ export default {
   },
   data() {
     return {
-      userId: Math.random().toString(36).slice(-5),
       messages: [],
       newMessage: "",
     };
   },
+  computed: {
+    user() {
+      return {
+        name:
+          this.$store?.state.essence?.user?.name ??
+          Math.random().toString(36).slice(-5),
+        id:
+          this.$store?.state.essence?.user?.id ??
+          Math.ceil(Math.random() * 10000),
+      };
+    },
+  },
   mounted() {
-    window.Echo.channel("chat").listen("NewChatMessage", (e) => {
-      console.log(e);
+    window.Echo.channel("laravel_database_chat").listen(".message", (e) => {
+      console.info(e);
       if (e.user != this.userId) {
         console.log(e);
         this.messages.push({
@@ -55,26 +73,23 @@ export default {
     submit() {
       axios
         .post(`api/message`, {
-          user: this.userId,
           message: this.newMessage,
+          user: this.user.name,
         })
-        .then(
-          (response) => {
-            console.dir(response)
-            this.messages.push({
-              text: this.newMessage,
-              user: this.userId,
-            });
-          }
-        )
-        .catch(err=>{
-            console.warn(err)
+        .then((response) => {
+          this.messages.push({
+            text: this.newMessage,
+            user: this.user.name,
+          });
         })
-        .finally(()=>{
-            this.newMessage = '';
+        .catch((err) => {
+          console.warn(err);
         })
+        .finally(() => {
+          this.newMessage = "";
+        });
     },
-      updateNewMessage(event) {
+    updateNewMessage(event) {
       this.newMessage = event.target?.value;
     },
   },

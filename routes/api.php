@@ -1,6 +1,5 @@
 <?php
 
-use App\Http\Controllers\MessageController;
 use Illuminate\Support\Facades\Route;
 use Illuminate\Http\Request;
 
@@ -42,6 +41,5 @@ Route::group(['prefix'=>'auth'], function() {
 
 
  Route::post('/message', [App\Http\Controllers\MessageController::class, 'broadcast']);
-
 
 

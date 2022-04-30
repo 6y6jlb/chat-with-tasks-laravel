@@ -10,6 +10,12 @@ export default [
         name: 'dashboard',
     },
     
+    {
+        path: '/chat',
+        component: () => import('../pages/Chat.vue'),
+        name: 'chat'
+    },
+
     // {
     //     path: 'projects',
     //     component: () => import('../pages/Projects.vue'),

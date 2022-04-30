@@ -30,17 +30,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */ });
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
   name: "input-form",
-  props: ["title", "type", "id", "placeholder", "value"],
-  data: function data() {
-    return {
-      content: this.value
-    };
-  },
-  methods: {
-    handleInput: function handleInput(e) {
-      this.$emit('input', this.content);
-    }
-  }
+  props: ["title", "type", "id", "placeholder", "value"]
 });
 
 /***/ }),
@@ -86,16 +76,25 @@ __webpack_require__.r(__webpack_exports__);
   },
   data: function data() {
     return {
-      userId: Math.random().toString(36).slice(-5),
       messages: [],
       newMessage: ""
     };
   },
+  computed: {
+    user: function user() {
+      var _this$$store$state$es, _this$$store, _this$$store$state$es2, _this$$store$state$es3, _this$$store$state$es4, _this$$store2, _this$$store2$state$e, _this$$store2$state$e2;
+
+      return {
+        name: (_this$$store$state$es = (_this$$store = this.$store) === null || _this$$store === void 0 ? void 0 : (_this$$store$state$es2 = _this$$store.state.essence) === null || _this$$store$state$es2 === void 0 ? void 0 : (_this$$store$state$es3 = _this$$store$state$es2.user) === null || _this$$store$state$es3 === void 0 ? void 0 : _this$$store$state$es3.name) !== null && _this$$store$state$es !== void 0 ? _this$$store$state$es : Math.random().toString(36).slice(-5),
+        id: (_this$$store$state$es4 = (_this$$store2 = this.$store) === null || _this$$store2 === void 0 ? void 0 : (_this$$store2$state$e = _this$$store2.state.essence) === null || _this$$store2$state$e === void 0 ? void 0 : (_this$$store2$state$e2 = _this$$store2$state$e.user) === null || _this$$store2$state$e2 === void 0 ? void 0 : _this$$store2$state$e2.id) !== null && _this$$store$state$es4 !== void 0 ? _this$$store$state$es4 : Math.ceil(Math.random() * 10000)
+      };
+    }
+  },
   mounted: function mounted() {
     var _this = this;
 
-    window.Echo.channel("chat").listen("NewChatMessage", function (e) {
-      console.log(e);
+    window.Echo.channel("laravel_database_chat").listen(".message", function (e) {
+      console.info(e);
 
       if (e.user != _this.userId) {
         console.log(e);
@@ -112,19 +111,17 @@ __webpack_require__.r(__webpack_exports__);
       var _this2 = this;
 
       axios.post("api/message", {
-        user: this.userId,
-        message: this.newMessage
+        message: this.newMessage,
+        user: this.user.name
       }).then(function (response) {
-        console.dir(response);
-
         _this2.messages.push({
           text: _this2.newMessage,
-          user: _this2.userId
+          user: _this2.user.name
         });
       })["catch"](function (err) {
         console.warn(err);
       })["finally"](function () {
-        _this2.newMessage = '';
+        _this2.newMessage = "";
       });
     },
     updateNewMessage: function updateNewMessage(event) {
@@ -203,20 +200,20 @@ var _hoisted_3 = ["id", "name", "aria-label", "type", "placeholder"];
 function render(_ctx, _cache, $props, $setup, $data, $options) {
   return (0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)("div", _hoisted_1, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("span", _hoisted_2, (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)(this.title), 1
   /* TEXT */
-  ), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("input", {
-    onInput: _cache[0] || (_cache[0] = function () {
-      return $options.handleInput && $options.handleInput.apply($options, arguments);
+  ), (0,vue__WEBPACK_IMPORTED_MODULE_0__.withDirectives)((0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("input", {
+    "onUpdate:modelValue": _cache[0] || (_cache[0] = function ($event) {
+      return $props.value = $event;
     }),
     id: $props.id,
     name: $props.id,
     "aria-label": $props.id,
     type: $props.type,
-    "class": "form-control",
     placeholder: $props.placeholder,
-    "aria-describedby": "basic-addon1"
-  }, null, 40
-  /* PROPS, HYDRATE_EVENTS */
-  , _hoisted_3), (0,vue__WEBPACK_IMPORTED_MODULE_0__.renderSlot)(_ctx.$slots, "default")]);
+    "aria-describedby": "basic-addon1",
+    "class": "form-control"
+  }, null, 8
+  /* PROPS */
+  , _hoisted_3), [[vue__WEBPACK_IMPORTED_MODULE_0__.vModelDynamic, $props.value]]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.renderSlot)(_ctx.$slots, "default")]);
 }
 
 /***/ }),
@@ -276,7 +273,10 @@ var _hoisted_2 = {
     "min-height": "60vh"
   }
 };
+var _hoisted_3 = ["disabled"];
 function render(_ctx, _cache, $props, $setup, $data, $options) {
+  var _this = this;
+
   var _component_main_title = (0,vue__WEBPACK_IMPORTED_MODULE_0__.resolveComponent)("main-title");
 
   var _component_chat_message = (0,vue__WEBPACK_IMPORTED_MODULE_0__.resolveComponent)("chat-message");
@@ -296,20 +296,24 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
   }), 128
   /* KEYED_FRAGMENT */
   ))]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_input_form, {
-    value: $data.newMessage,
+    value: this.newMessage,
     onInput: $options.updateNewMessage,
     id: "newMessage",
     name: "newMessage",
     type: "text",
-    title: "text"
+    title: "text",
+    placeholder: "message"
   }, {
     "default": (0,vue__WEBPACK_IMPORTED_MODULE_0__.withCtx)(function () {
       return [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("button", {
+        disabled: !_this.newMessage.trim(),
         onClick: _cache[0] || (_cache[0] = (0,vue__WEBPACK_IMPORTED_MODULE_0__.withModifiers)(function () {
           return $options.submit && $options.submit.apply($options, arguments);
         }, ["prevent"])),
         "class": "btn btn-success"
-      }, "send it")];
+      }, " send it ", 8
+      /* PROPS */
+      , _hoisted_3)];
     }),
     _: 1
     /* STABLE */
