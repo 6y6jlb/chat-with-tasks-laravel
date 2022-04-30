@@ -12,7 +12,8 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
 /* harmony export */ });
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
-  name: "chat-message"
+  name: "chat-message",
+  props: ['message']
 });
 
 /***/ }),
@@ -29,17 +30,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */ });
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
   name: "input-form",
-  props: ["title", "type", "id", "placeholder", "value"],
-  data: function data() {
-    return {
-      content: this.value
-    };
-  },
-  methods: {
-    handleInput: function handleInput(e) {
-      this.$emit('input', this.content);
-    }
-  }
+  props: ["title", "type", "id", "placeholder", "value"]
 });
 
 /***/ }),
@@ -82,6 +73,62 @@ __webpack_require__.r(__webpack_exports__);
     MainTitle: _components_common_MainTitle_vue__WEBPACK_IMPORTED_MODULE_2__["default"],
     ChatMessage: _components_common_ChatMessage_vue__WEBPACK_IMPORTED_MODULE_0__["default"],
     InputForm: _components_common_InputForm_vue__WEBPACK_IMPORTED_MODULE_1__["default"]
+  },
+  data: function data() {
+    return {
+      messages: [],
+      newMessage: ""
+    };
+  },
+  computed: {
+    user: function user() {
+      var _this$$store$state$es, _this$$store, _this$$store$state$es2, _this$$store$state$es3, _this$$store$state$es4, _this$$store2, _this$$store2$state$e, _this$$store2$state$e2;
+
+      return {
+        name: (_this$$store$state$es = (_this$$store = this.$store) === null || _this$$store === void 0 ? void 0 : (_this$$store$state$es2 = _this$$store.state.essence) === null || _this$$store$state$es2 === void 0 ? void 0 : (_this$$store$state$es3 = _this$$store$state$es2.user) === null || _this$$store$state$es3 === void 0 ? void 0 : _this$$store$state$es3.name) !== null && _this$$store$state$es !== void 0 ? _this$$store$state$es : Math.random().toString(36).slice(-5),
+        id: (_this$$store$state$es4 = (_this$$store2 = this.$store) === null || _this$$store2 === void 0 ? void 0 : (_this$$store2$state$e = _this$$store2.state.essence) === null || _this$$store2$state$e === void 0 ? void 0 : (_this$$store2$state$e2 = _this$$store2$state$e.user) === null || _this$$store2$state$e2 === void 0 ? void 0 : _this$$store2$state$e2.id) !== null && _this$$store$state$es4 !== void 0 ? _this$$store$state$es4 : Math.ceil(Math.random() * 10000)
+      };
+    }
+  },
+  mounted: function mounted() {
+    var _this = this;
+
+    window.Echo.channel("laravel_database_chat").listen(".message", function (e) {
+      console.info(e);
+
+      if (e.user != _this.userId) {
+        console.log(e);
+
+        _this.messages.push({
+          text: e.message,
+          user: e.user
+        });
+      }
+    });
+  },
+  methods: {
+    submit: function submit() {
+      var _this2 = this;
+
+      axios.post("api/message", {
+        message: this.newMessage,
+        user: this.user.name
+      }).then(function (response) {
+        _this2.messages.push({
+          text: _this2.newMessage,
+          user: _this2.user.name
+        });
+      })["catch"](function (err) {
+        console.warn(err);
+      })["finally"](function () {
+        _this2.newMessage = "";
+      });
+    },
+    updateNewMessage: function updateNewMessage(event) {
+      var _event$target;
+
+      this.newMessage = (_event$target = event.target) === null || _event$target === void 0 ? void 0 : _event$target.value;
+    }
   }
 });
 
@@ -102,31 +149,30 @@ __webpack_require__.r(__webpack_exports__);
 var _hoisted_1 = {
   "class": "bg-primary text-shite d-flex flex-column w-50 border rounded p-2"
 };
-
-var _hoisted_2 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", {
+var _hoisted_2 = {
   "class": "d-flex",
   style: {
     "gap": "4px"
   }
-}, [/*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("span", null, "guest"), /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("span", {
+};
+
+var _hoisted_3 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("span", {
   "class": "text-success"
-}, "online")], -1
+}, "online", -1
 /* HOISTED */
 );
 
-var _hoisted_3 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", null, [/*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("p", null, " Lorem ipsum dolor sit amet consectetur adipisicing elit. Eum, exercitationem ducimus aliquid totam fugit ullam labore odio cumque nisi ratione. ")], -1
-/* HOISTED */
-);
-
-var _hoisted_4 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", null, [/*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("span", {
+var _hoisted_4 = {
   "class": "text-mutted text-right text small"
-}, " 110011000 ")], -1
-/* HOISTED */
-);
-
-var _hoisted_5 = [_hoisted_2, _hoisted_3, _hoisted_4];
+};
 function render(_ctx, _cache, $props, $setup, $data, $options) {
-  return (0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)("div", _hoisted_1, _hoisted_5);
+  return (0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)("div", _hoisted_1, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_2, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("span", null, (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)(this.message.user), 1
+  /* TEXT */
+  ), _hoisted_3]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", null, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("p", null, (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)(this.message.text), 1
+  /* TEXT */
+  )]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", null, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("span", _hoisted_4, (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)(this.message.created_at), 1
+  /* TEXT */
+  )])]);
 }
 
 /***/ }),
@@ -154,20 +200,20 @@ var _hoisted_3 = ["id", "name", "aria-label", "type", "placeholder"];
 function render(_ctx, _cache, $props, $setup, $data, $options) {
   return (0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)("div", _hoisted_1, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("span", _hoisted_2, (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)(this.title), 1
   /* TEXT */
-  ), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("input", {
-    onInput: _cache[0] || (_cache[0] = function () {
-      return $options.handleInput && $options.handleInput.apply($options, arguments);
+  ), (0,vue__WEBPACK_IMPORTED_MODULE_0__.withDirectives)((0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("input", {
+    "onUpdate:modelValue": _cache[0] || (_cache[0] = function ($event) {
+      return $props.value = $event;
     }),
     id: $props.id,
     name: $props.id,
     "aria-label": $props.id,
     type: $props.type,
-    "class": "form-control",
     placeholder: $props.placeholder,
-    "aria-describedby": "basic-addon1"
-  }, null, 40
-  /* PROPS, HYDRATE_EVENTS */
-  , _hoisted_3), (0,vue__WEBPACK_IMPORTED_MODULE_0__.renderSlot)(_ctx.$slots, "default")]);
+    "aria-describedby": "basic-addon1",
+    "class": "form-control"
+  }, null, 8
+  /* PROPS */
+  , _hoisted_3), [[vue__WEBPACK_IMPORTED_MODULE_0__.vModelDynamic, $props.value]]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.renderSlot)(_ctx.$slots, "default")]);
 }
 
 /***/ }),
@@ -227,6 +273,7 @@ var _hoisted_2 = {
     "min-height": "60vh"
   }
 };
+var _hoisted_3 = ["disabled"];
 function render(_ctx, _cache, $props, $setup, $data, $options) {
   var _this = this;
 
@@ -239,24 +286,41 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
   return (0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)("div", _hoisted_1, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_main_title, {
     title: "chat",
     description: "some shit"
-  }), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_2, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_chat_message), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_chat_message), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_chat_message)]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_input_form, {
-    id: "message",
-    name: "message",
+  }), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_2, [((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(true), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)(vue__WEBPACK_IMPORTED_MODULE_0__.Fragment, null, (0,vue__WEBPACK_IMPORTED_MODULE_0__.renderList)($data.messages, function (message) {
+    return (0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createBlock)(_component_chat_message, {
+      key: message.id,
+      message: message
+    }, null, 8
+    /* PROPS */
+    , ["message"]);
+  }), 128
+  /* KEYED_FRAGMENT */
+  ))]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_input_form, {
+    value: this.newMessage,
+    onInput: $options.updateNewMessage,
+    id: "newMessage",
+    name: "newMessage",
     type: "text",
-    title: "text"
+    title: "text",
+    placeholder: "message"
   }, {
     "default": (0,vue__WEBPACK_IMPORTED_MODULE_0__.withCtx)(function () {
       return [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("button", {
-        onClick: _cache[0] || (_cache[0] = (0,vue__WEBPACK_IMPORTED_MODULE_0__.withModifiers)(function ($event) {
-          return _ctx.$emit('submit', _this.form);
+        disabled: !_this.newMessage.trim(),
+        onClick: _cache[0] || (_cache[0] = (0,vue__WEBPACK_IMPORTED_MODULE_0__.withModifiers)(function () {
+          return $options.submit && $options.submit.apply($options, arguments);
         }, ["prevent"])),
         "class": "btn btn-success"
-      }, " send it ")];
+      }, " send it ", 8
+      /* PROPS */
+      , _hoisted_3)];
     }),
     _: 1
     /* STABLE */
 
-  })]);
+  }, 8
+  /* PROPS */
+  , ["value", "onInput"])]);
 }
 
 /***/ }),

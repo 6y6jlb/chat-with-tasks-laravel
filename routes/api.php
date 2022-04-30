@@ -1,6 +1,5 @@
 <?php
 
-use App\Http\Controllers\AuthController;
 use Illuminate\Support\Facades\Route;
 use Illuminate\Http\Request;
 
@@ -41,5 +40,6 @@ Route::group(['prefix'=>'auth'], function() {
  Route::delete('project/{id}',  [App\Http\Controllers\ProjectController::class, 'delete']);
 
 
+ Route::post('/message', [App\Http\Controllers\MessageController::class, 'broadcast']);
 
 
