@@ -131,8 +131,11 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
             switch (_context.prev = _context.next) {
               case 0:
                 data = {
-                  email: formData.email.trim(),
-                  password: formData.password.trim()
+                  form: {
+                    email: formData.email.trim(),
+                    password: formData.password.trim()
+                  },
+                  route: "login"
                 };
                 _context.next = 3;
                 return _this.$store.dispatch("essence/fetchUser", data);
