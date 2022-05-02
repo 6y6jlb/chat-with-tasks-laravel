@@ -1,46 +1,33 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
-use Illuminate\Http\Request;
 
 /*
 |--------------------------------------------------------------------------
 | API Routes
 |--------------------------------------------------------------------------
-|
-| Here is where you can register API routes for your application. These
-| routes are loaded by the RouteServiceProvider within a group which
-| is assigned the "api" middleware group. Enjoy building your API!
-|
 */
 
-// Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
-//     return $request->user();
-// });
-
-
-// Route::group(['middleware'=> ['auth:sanctum']], function() {
-//     Route::get('/projects',  [App\Http\Controllers\ProjectController::class, 'index']);
-   
-// });
-
-// protected routes
+// auth
 Route::group(['prefix'=>'auth'], function() {
     Route::post('login', [App\Http\Controllers\AuthController::class, 'login']);
+    Route::post('logout', [App\Http\Controllers\AuthController::class, 'logout']);
     Route::post('register', [App\Http\Controllers\AuthController::class, 'register']);
 });
 
-//  Route::get('projects',  [App\Http\Controllers\ProjectController::class, 'index']);
 
- Route::get('project/{id}', [App\Http\Controllers\ProjectController::class,'show']);
+//public routes
+Route::get('/projects',  [App\Http\Controllers\ProjectController::class, 'index']);
+Route::get('project/{id}', [App\Http\Controllers\ProjectController::class,'show']);
+Route::post('project', [App\Http\Controllers\ProjectController::class, 'store']);
+Route::put('project/{id}',  [App\Http\Controllers\ProjectController::class, 'update']);
+Route::delete('project/{id}',  [App\Http\Controllers\ProjectController::class, 'delete']);
 
- Route::post('project', [App\Http\Controllers\ProjectController::class, 'store']);
+Route::post('/message', [App\Http\Controllers\MessageController::class, 'broadcast']);
 
- Route::put('project/{id}',  [App\Http\Controllers\ProjectController::class, 'update']);
 
- Route::delete('project/{id}',  [App\Http\Controllers\ProjectController::class, 'delete']);
-
- Route::post('/message', [App\Http\Controllers\MessageController::class, 'broadcast']);
-
- Route::get('/messages', [App\Http\Controllers\MessageController::class, 'messages']);
-
+// protected routes
+Route::group(['middleware'=> ['auth:sanctum']], function() {
+    Route::get('/messages', [App\Http\Controllers\MessageController::class, 'messages']);
+   
+});

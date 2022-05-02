@@ -20,8 +20,11 @@ export default {
   methods: {
     async login(formData) {
       const data = {
-        email: formData.email.trim(),
-        password: formData.password.trim(),
+        form: {
+          email: formData.email.trim(),
+          password: formData.password.trim(),
+        },
+        route: "login",
       };
       await this.$store.dispatch("essence/fetchUser", data);
       this.$router.push({ name: "dashboard" });

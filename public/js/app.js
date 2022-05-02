@@ -23172,6 +23172,7 @@ try {
 
 window.axios = __webpack_require__(/*! axios */ "./node_modules/axios/index.js");
 window.axios.defaults.headers.common['X-Requested-With'] = 'XMLHttpRequest';
+window.axios.defaults.withCredentials = true;
 /**
  * Echo exposes an expressive API for subscribing to channels and listening
  * for events that are broadcast by Laravel. Echo and event broadcasting
@@ -23360,7 +23361,7 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
   },
   getters: {},
   actions: {
-    fetchUser: function fetchUser(_ref, formData) {
+    fetchUser: function fetchUser(_ref, data) {
       return _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default().mark(function _callee() {
         var dispatch, commit, getters, rootGetters, response, _response$data, token, user, message, errors, _message;
 
@@ -23372,7 +23373,7 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
                 _context.prev = 1;
                 commit('setLoading', true);
                 _context.next = 5;
-                return axios.post('api/auth/login', formData);
+                return axios.post('api/auth/' + data.route, data.form);
 
               case 5:
                 response = _context.sent;

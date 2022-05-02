@@ -18,10 +18,10 @@ export default {
 
      },
      actions: {
-        async fetchUser({ dispatch, commit, getters, rootGetters },formData) {
+        async fetchUser({ dispatch, commit, getters, rootGetters },data) {
             try {
                 commit('setLoading', true);
-                const response = await axios.post('api/auth/login',formData);
+                const response = await axios.post('api/auth/' + data.route,data.form);
                 const {token, user, message} = response.data;
                 commit('setUser', user);
                 commit('notification/setMessage', message,{ root: true });
