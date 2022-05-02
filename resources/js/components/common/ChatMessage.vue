@@ -1,8 +1,10 @@
 <template>
-  <div class="bg-primary text-shite d-flex flex-column w-50 border rounded p-2">
+  <div class="text-dark d-flex flex-column w-50 border rounded p-2"
+  :class="[userBg, userPossition]">
     <div class="d-flex" style="gap: 4px">
-      <span>{{this.message.user}}</span>
-      <span class="text-success">online</span>
+      <span>{{this.message.user.name}}</span>
+      <span class="text-mutted" v-if="this.message.user.id">{{this.message.user.id}}</span>
+      <!-- <span class="text-success">online</span> -->
     </div>
     <div>
       <p>
@@ -18,9 +20,21 @@
 <script>
 export default {
   name: "chat-message",
-  props: ['message']
+  props: ['message'],
+  data() {
+   return { 
+     userBg: this.message.isMe ? 'bg-deep' : 'bg-light',
+     userPossition: this.message.isMe ? 'align-self-end' : 'align-self-start'
+     }
+  }
 };
 </script>
 
-<style>
+<style scoped>
+  .bg-light {
+    background-color: rgb(170, 192, 250);
+  }
+  .bg-deep {
+    background-color: rgb(127, 149, 207);
+  }
 </style>

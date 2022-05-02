@@ -1,10 +1,10 @@
 <template>
   <div class="container" style="max-width: 800px">
     <main-title title="chat" description="some shit"></main-title>
-    <div class="card p-3" style="min-height: 60vh">
+    <div class="card p-3" style="min-height: 60vh; gap: 10px">
       <chat-message
-        :key="message.id"
         v-for="message in messages"
+        :key="message.id"
         :message="message"
       ></chat-message>
     </div>
@@ -18,8 +18,8 @@
       placeholder="message"
     >
       <button
-        :disabled="!this.newMessage.trim()"
         @click.prevent="submit"
+        :disabled="!this.newMessage.trim()"
         class="btn btn-success"
       >
         send it
@@ -53,7 +53,7 @@ export default {
           Math.random().toString(36).slice(-5),
         id:
           this.$store?.state.essence?.user?.id ??
-          Math.ceil(Math.random() * 10000),
+          0,
       };
     },
   },
@@ -65,6 +65,7 @@ export default {
         this.messages.push({
           text: e.message,
           user: e.user,
+          isMe: e.user.id === this.user.id && e.user.name === this.user.name
         });
       }
     });
@@ -74,12 +75,13 @@ export default {
       axios
         .post(`api/message`, {
           message: this.newMessage,
-          user: this.user.name,
+          user: this.user,
         })
         .then((response) => {
           this.messages.push({
             text: this.newMessage,
-            user: this.user.name,
+            user: this.user,
+            isMe: true
           });
         })
         .catch((err) => {
