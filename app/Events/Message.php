@@ -2,6 +2,7 @@
 
 namespace App\Events;
 
+use App\Http\Resources\MessageResource;
 use Illuminate\Broadcasting\Channel;
 use Illuminate\Broadcasting\InteractsWithSockets;
 use Illuminate\Broadcasting\PresenceChannel;
@@ -15,17 +16,15 @@ class Message implements ShouldBroadcast
     use Dispatchable, InteractsWithSockets, SerializesModels;
 
     public $message;
-    public $user;
+    
     /**
      * Create a new event instance.
      *
      * @return void
      */
-    public function __construct($message, $user)
+    public function __construct($message)
     {
-        $this->message = $message;
-        $this->user = $user;
-        $this->dontBroadcastToCurrentUser();
+        $this->message = new MessageResource($message);
     }
 
 
@@ -42,7 +41,6 @@ class Message implements ShouldBroadcast
     public function broadcastWith()
     {
         return [
-            'user' => $this->user,
             'message' => $this->message,
         ];
     }

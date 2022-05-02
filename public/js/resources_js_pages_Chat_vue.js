@@ -71,6 +71,12 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _components_common_ChatMessage_vue__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../components/common/ChatMessage.vue */ "./resources/js/components/common/ChatMessage.vue");
 /* harmony import */ var _components_common_InputForm_vue__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../components/common/InputForm.vue */ "./resources/js/components/common/InputForm.vue");
 /* harmony import */ var _components_common_MainTitle_vue__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../components/common/MainTitle.vue */ "./resources/js/components/common/MainTitle.vue");
+function ownKeys(object, enumerableOnly) { var keys = Object.keys(object); if (Object.getOwnPropertySymbols) { var symbols = Object.getOwnPropertySymbols(object); enumerableOnly && (symbols = symbols.filter(function (sym) { return Object.getOwnPropertyDescriptor(object, sym).enumerable; })), keys.push.apply(keys, symbols); } return keys; }
+
+function _objectSpread(target) { for (var i = 1; i < arguments.length; i++) { var source = null != arguments[i] ? arguments[i] : {}; i % 2 ? ownKeys(Object(source), !0).forEach(function (key) { _defineProperty(target, key, source[key]); }) : Object.getOwnPropertyDescriptors ? Object.defineProperties(target, Object.getOwnPropertyDescriptors(source)) : ownKeys(Object(source)).forEach(function (key) { Object.defineProperty(target, key, Object.getOwnPropertyDescriptor(source, key)); }); } return target; }
+
+function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
+
 
 
 
@@ -97,39 +103,54 @@ __webpack_require__.r(__webpack_exports__);
     }
   },
   mounted: function mounted() {
-    var _this = this;
-
-    window.Echo.channel("laravel_database_chat").listen(".message", function (e) {
-      console.info(e);
-
-      if (e.user != _this.userId) {
-        console.log(e);
-
-        _this.messages.push({
-          text: e.message,
-          user: e.user,
-          isMe: e.user.id === _this.user.id && e.user.name === _this.user.name
-        });
-      }
-    });
+    this.getMessages();
   },
   methods: {
-    submit: function submit() {
+    scroolDown: function scroolDown() {
+      var _this = this;
+
+      this.$nextTick(function () {
+        _this.$refs.chatRef.scrollTop = 0;
+      });
+    },
+    getMessages: function getMessages() {
       var _this2 = this;
+
+      axios.get("api/messages").then(function (response) {
+        _this2.messages = response.data.data;
+
+        _this2.scroolDown();
+      })["catch"](function (e) {
+        return console.warn(e);
+      })["finally"](function () {
+        return _this2.getEcho();
+      });
+    },
+    getEcho: function getEcho() {
+      var _this3 = this;
+
+      window.Echo.channel("laravel_database_chat").listen(".message", function (e) {
+        console.info(e);
+
+        var message = _objectSpread(_objectSpread({}, e.message), {}, {
+          isMe: e.message.user.id === _this3.user.id && e.message.user.name === _this3.user.name
+        });
+
+        _this3.messages.push(message);
+
+        _this3.scroolDown();
+      });
+    },
+    submit: function submit() {
+      var _this4 = this;
 
       axios.post("api/message", {
         message: this.newMessage,
         user: this.user
-      }).then(function (response) {
-        _this2.messages.push({
-          text: _this2.newMessage,
-          user: _this2.user,
-          isMe: true
-        });
       })["catch"](function (err) {
         console.warn(err);
       })["finally"](function () {
-        _this2.newMessage = "";
+        _this4.newMessage = "";
       });
     },
     updateNewMessage: function updateNewMessage(event) {
@@ -288,6 +309,9 @@ var _hoisted_2 = {
   }
 };
 var _hoisted_3 = ["disabled"];
+var _hoisted_4 = {
+  ref: "chatRef"
+};
 function render(_ctx, _cache, $props, $setup, $data, $options) {
   var _this = this;
 
@@ -334,7 +358,9 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
 
   }, 8
   /* PROPS */
-  , ["value", "onInput"])]);
+  , ["value", "onInput"]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_4, null, 512
+  /* NEED_PATCH */
+  )]);
 }
 
 /***/ }),
