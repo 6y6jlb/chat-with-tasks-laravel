@@ -14,14 +14,15 @@ use Illuminate\Http\Request;
 |
 */
 
-Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
-    return $request->user();
-});
+// Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
+//     return $request->user();
+// });
 
 
-Route::group(['middleware'=> ['auth:sanctum']], function() {
-    Route::get('projects',  [App\Http\Controllers\ProjectController::class, 'index']);
-});
+// Route::group(['middleware'=> ['auth:sanctum']], function() {
+//     Route::get('/projects',  [App\Http\Controllers\ProjectController::class, 'index']);
+   
+// });
 
 // protected routes
 Route::group(['prefix'=>'auth'], function() {
@@ -39,7 +40,7 @@ Route::group(['prefix'=>'auth'], function() {
 
  Route::delete('project/{id}',  [App\Http\Controllers\ProjectController::class, 'delete']);
 
-
  Route::post('/message', [App\Http\Controllers\MessageController::class, 'broadcast']);
 
+ Route::get('/messages', [App\Http\Controllers\MessageController::class, 'messages']);
 
