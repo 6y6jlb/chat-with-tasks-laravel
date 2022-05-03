@@ -25,7 +25,7 @@
         send it
       </button>
     </input-form>
-    <div ref="chatRef"/>
+    <div ref="chatRef" />
   </div>
 </template>
 
@@ -42,62 +42,34 @@ export default {
   },
   data() {
     return {
-      messages: [],
       newMessage: "",
+      user: this.$store?.state.essence?.user,
     };
-  },
-  computed: {
-    user() {
-      return {
-        name:
-          this.$store?.state.essence?.user?.name ??
-          Math.random().toString(36).slice(-5),
-        id: this.$store?.state.essence?.user?.id ?? 0,
-      };
-    },
   },
   mounted() {
     this.getMessages();
   },
+  computed: {
+    messages() {
+      return this.$store?.state.chat.messages;
+    },
+  },
   methods: {
     scroolDown() {
       this.$nextTick(() => {
-            this.$refs.chatRef.scrollTop = 0;
-        });
-    },
-    getMessages() {
-      axios
-        .get(`api/messages`)
-        .then((response) => {
-          this.messages = response.data.data;
-          this.scroolDown();
-        })
-        .catch((e) => console.warn(e))
-        .finally(() => this.getEcho());
-    },
-    getEcho() {
-      window.Echo.channel("laravel_database_chat").listen(".message", (e) => {
-        console.info(e);
-        const message = {
-            ...e.message,
-            isMe: e.message.user.id === this.user.id && e.message.user.name === this.user.name,
-            }
-            this.messages.push(message);
-            this.scroolDown();
+        this.$refs.chatRef.scrollTop = 0;
       });
     },
-    submit() {
-      axios
-        .post(`api/message`, {
-          message: this.newMessage,
-          user: this.user,
-        })
-        .catch((err) => {
-          console.warn(err);
-        })
-        .finally(() => {
-          this.newMessage = "";
-        });
+    async getMessages() {
+      await this.$store.dispatch("chat/getMessages");
+      await this.scroolDown();
+    },
+    async submit() {
+      await this.$store.dispatch("chat/sendMessage", {
+        message: this.newMessage,
+        user: this.user,
+      });
+      this.newMessage = "";
     },
     updateNewMessage(event) {
       this.newMessage = event.target?.value;

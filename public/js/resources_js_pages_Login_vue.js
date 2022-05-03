@@ -141,19 +141,15 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
                 return _this.$store.dispatch("essence/fetchUser", data);
 
               case 3:
-                _this.$router.push({
-                  name: "dashboard"
-                });
-
-                _context.next = 6;
+                _context.next = 5;
                 return (0,_vue_runtime_core__WEBPACK_IMPORTED_MODULE_3__.nextTick)();
 
-              case 6:
+              case 5:
                 _this.$router.push({
                   name: _this.isAuth ? "dashboard" : "home"
                 });
 
-              case 7:
+              case 6:
               case "end":
                 return _context.stop();
             }
