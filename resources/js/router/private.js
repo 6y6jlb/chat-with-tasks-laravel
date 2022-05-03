@@ -15,7 +15,7 @@ export default [
         component: () => import('../pages/Chat.vue'),
         name: 'chat'
     },
-
+    
     // {
     //     path: 'projects',
     //     component: () => import('../pages/Projects.vue'),
