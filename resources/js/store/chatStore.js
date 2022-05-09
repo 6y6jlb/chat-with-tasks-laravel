@@ -3,13 +3,18 @@ export default {
     state() {
         return {
             messages: [],
-            loading: false
+            loading: false,
+            withEcho: false
 
         }
     },
     mutations: {
-        setMessages(state, messages) {
-            state.messages = [...state.messages, ...messages]
+        setMessages(state, payload) {
+            state.messages = payload.default ? payload.messages : [...state.messages, ...payload.messages]
+
+        },
+        setEcho(state, isEchoOn) {
+            state.withEcho = isEchoOn
 
         },
         setLoading(state, condition) {
@@ -17,9 +22,12 @@ export default {
         }
     },
     getters: {
+        echoGetter(state, getters, rootState, rootGetters) {
+            return state.withEcho
+        },
     },
     actions: {
-        sendMessage({ dispatch, commit, getters, rootGetters },{message, user}) {
+        sendMessage({ dispatch, commit, getters, rootGetters }, { message, user }) {
             try {
                 axios
                     .post(`api/message`, {
@@ -31,14 +39,14 @@ export default {
             }
         },
         getEcho({ dispatch, commit, getters, rootGetters }) {
-            const user = rootGetters['essence/userGetter'];
             window.Echo.channel("laravel_database_chat").listen(".message", (e) => {
-                console.info(e);
+                const user = rootGetters['essence/userGetter'];
                 const message = {
                     ...e.message,
-                    isMe: e.message.user.id === user.id && e.message.user.name === user.name,
+                    isMe: e.message.user.id === user.id || e.message.user.name === user.name,
                 }
-                commit('setMessages', [message]);
+                commit('setMessages', {messages: [message], default: false});
+                commit('setEcho', true)
             });
         },
 
@@ -52,13 +60,16 @@ export default {
                         'Authorization': 'Bearer ' + token
                     }
                 }).get(`messages`);
-                commit('setMessages', response.data.data);
+                commit('setMessages', {messages: response.data.data, default: true});
             } catch (error) {
                 const { errors, message } = error;
                 commit('notification/setError', errors, { root: true });
                 commit('notification/setMessage', message, { root: true });
             } finally {
-                dispatch('getEcho');
+                if (!getters['echoGetter']) {
+                    dispatch('getEcho');
+                }
+
             }
         },
     }

@@ -23124,11 +23124,14 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var vue__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! vue */ "./node_modules/vue/dist/vue.esm-bundler.js");
 
 var _hoisted_1 = {
-  "class": "d-flex justify-content-between m-4 mt-1 fs-3 fw-bolder"
+  "class": "d-flex justify-content-between m-4 fs-3 fw-bolder"
 };
 
 var _hoisted_2 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("a", {
   "class": "btn btn-info btn-lg",
+  style: {
+    "width": "200px"
+  },
   href: "/portfolio"
 }, "me", -1
 /* HOISTED */
@@ -23413,18 +23416,26 @@ function _arrayLikeToArray(arr, len) { if (len == null || len > arr.length) len 
   state: function state() {
     return {
       messages: [],
-      loading: false
+      loading: false,
+      withEcho: false
     };
   },
   mutations: {
-    setMessages: function setMessages(state, messages) {
-      state.messages = [].concat(_toConsumableArray(state.messages), _toConsumableArray(messages));
+    setMessages: function setMessages(state, payload) {
+      state.messages = payload["default"] ? payload.messages : [].concat(_toConsumableArray(state.messages), _toConsumableArray(payload.messages));
+    },
+    setEcho: function setEcho(state, isEchoOn) {
+      state.withEcho = isEchoOn;
     },
     setLoading: function setLoading(state, condition) {
       state.loading = condition;
     }
   },
-  getters: {},
+  getters: {
+    echoGetter: function echoGetter(state, getters, rootState, rootGetters) {
+      return state.withEcho;
+    }
+  },
   actions: {
     sendMessage: function sendMessage(_ref, _ref2) {
       var dispatch = _ref.dispatch,
@@ -23448,15 +23459,18 @@ function _arrayLikeToArray(arr, len) { if (len == null || len > arr.length) len 
           commit = _ref3.commit,
           getters = _ref3.getters,
           rootGetters = _ref3.rootGetters;
-      var user = rootGetters['essence/userGetter'];
       window.Echo.channel("laravel_database_chat").listen(".message", function (e) {
-        console.info(e);
+        var user = rootGetters['essence/userGetter'];
 
         var message = _objectSpread(_objectSpread({}, e.message), {}, {
-          isMe: e.message.user.id === user.id && e.message.user.name === user.name
+          isMe: e.message.user.id === user.id || e.message.user.name === user.name
         });
 
-        commit('setMessages', [message]);
+        commit('setMessages', {
+          messages: [message],
+          "default": false
+        });
+        commit('setEcho', true);
       });
     },
     getMessages: function getMessages(_ref4) {
@@ -23480,7 +23494,10 @@ function _arrayLikeToArray(arr, len) { if (len == null || len > arr.length) len 
 
               case 5:
                 response = _context.sent;
-                commit('setMessages', response.data.data);
+                commit('setMessages', {
+                  messages: response.data.data,
+                  "default": true
+                });
                 _context.next = 14;
                 break;
 
@@ -23497,7 +23514,11 @@ function _arrayLikeToArray(arr, len) { if (len == null || len > arr.length) len 
 
               case 14:
                 _context.prev = 14;
-                dispatch('getEcho');
+
+                if (!getters['echoGetter']) {
+                  dispatch('getEcho');
+                }
+
                 return _context.finish(14);
 
               case 17:

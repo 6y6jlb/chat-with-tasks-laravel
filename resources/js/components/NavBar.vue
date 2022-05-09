@@ -1,6 +1,7 @@
 <template>
-  <nav class="d-flex justify-content-between m-4 mt-1 fs-3 fw-bolder">
+  <nav class="d-flex justify-content-between m-4 fs-3 fw-bolder">
     <a class="btn btn-info btn-lg"
+    style="width: 200px"
       href="/portfolio">me</a>
     <div class="d-flex gap-5">
       <router-link
