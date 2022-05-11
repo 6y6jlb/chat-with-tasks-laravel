@@ -1,6 +1,7 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
+use Illuminate\Http\Request;
 
 /*
 |--------------------------------------------------------------------------
@@ -29,5 +30,11 @@ Route::post('/message', [App\Http\Controllers\MessageController::class, 'broadca
 // protected routes
 Route::group(['middleware'=> ['auth:sanctum']], function() {
     Route::get('/messages', [App\Http\Controllers\MessageController::class, 'messages']);
+   
+});
+Route::group(['middleware'=> ['auth:sanctum']], function() {
+    Route::get('/user', function(Request $request) {
+        return $request->user();
+    });
    
 });

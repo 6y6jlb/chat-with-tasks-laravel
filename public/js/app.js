@@ -23066,15 +23066,11 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
                 return _this.$store.dispatch("essence/logout");
 
               case 2:
-                _context.next = 4;
-                return nextTick();
-
-              case 4:
                 _this.$router.push({
                   name: "home"
                 });
 
-              case 5:
+              case 3:
               case "end":
                 return _context.stop();
             }
@@ -23132,8 +23128,8 @@ var _hoisted_2 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementV
   style: {
     "width": "200px"
   },
-  href: "/portfolio"
-}, "me", -1
+  href: "https://6y6jlb.github.io/my-portfolio-js/"
+}, "author", -1
 /* HOISTED */
 );
 
@@ -23145,7 +23141,10 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
 
   return (0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)("nav", _hoisted_1, [_hoisted_2, (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_3, [((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(true), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)(vue__WEBPACK_IMPORTED_MODULE_0__.Fragment, null, (0,vue__WEBPACK_IMPORTED_MODULE_0__.renderList)($options.routes, function (route) {
     return (0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createBlock)(_component_router_link, {
-      "class": "btn btn-outline-secondary btn-lg d-block",
+      "class": (0,vue__WEBPACK_IMPORTED_MODULE_0__.normalizeClass)(["btn btn-outline-secondary btn-lg d-block", {
+        'btn-success': route.name === 'register' || route.name === 'login',
+        'text-white': route.name === 'register' || route.name === 'login'
+      }]),
       key: route.name,
       to: {
         name: route.name
@@ -23163,7 +23162,7 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
 
     }, 1032
     /* PROPS, DYNAMIC_SLOTS */
-    , ["to"]);
+    , ["class", "to"]);
   }), 128
   /* KEYED_FRAGMENT */
   )), $options.isAuth ? ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)("a", {
@@ -23547,11 +23546,13 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */ });
 /* harmony import */ var _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @babel/runtime/regenerator */ "./node_modules/@babel/runtime/regenerator/index.js");
 /* harmony import */ var _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0__);
+/* harmony import */ var _router__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../router */ "./resources/js/router/index.js");
 
 
 function asyncGeneratorStep(gen, resolve, reject, _next, _throw, key, arg) { try { var info = gen[key](arg); var value = info.value; } catch (error) { reject(error); return; } if (info.done) { resolve(value); } else { Promise.resolve(value).then(_next, _throw); } }
 
 function _asyncToGenerator(fn) { return function () { var self = this, args = arguments; return new Promise(function (resolve, reject) { var gen = fn.apply(self, args); function _next(value) { asyncGeneratorStep(gen, resolve, reject, _next, _throw, "next", value); } function _throw(err) { asyncGeneratorStep(gen, resolve, reject, _next, _throw, "throw", err); } _next(undefined); }); }; }
+
 
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
   namespaced: true,
@@ -23607,11 +23608,12 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
                 commit('notification/setMessage', message, {
                   root: true
                 });
-                _context.next = 17;
+                _router__WEBPACK_IMPORTED_MODULE_1__["default"].push('chat');
+                _context.next = 18;
                 break;
 
-              case 12:
-                _context.prev = 12;
+              case 13:
+                _context.prev = 13;
                 _context.t0 = _context["catch"](1);
                 errors = _context.t0.errors, _message = _context.t0.message;
                 commit('notification/setError', errors, {
@@ -23621,17 +23623,17 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
                   root: true
                 });
 
-              case 17:
-                _context.prev = 17;
+              case 18:
+                _context.prev = 18;
                 commit('setLoading', false);
-                return _context.finish(17);
+                return _context.finish(18);
 
-              case 20:
+              case 21:
               case "end":
                 return _context.stop();
             }
           }
-        }, _callee, null, [[1, 12, 17, 20]]);
+        }, _callee, null, [[1, 13, 18, 21]]);
       }))();
     },
     logout: function logout(_ref2) {

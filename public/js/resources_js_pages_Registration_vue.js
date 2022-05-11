@@ -133,19 +133,6 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
                 return _this.$store.dispatch("essence/fetchUser", data);
 
               case 3:
-                _this.$router.push({
-                  name: "dashboard"
-                });
-
-                _context.next = 6;
-                return nextTick();
-
-              case 6:
-                _this.$router.push({
-                  name: _this.isAuth ? "dashboard" : "home"
-                });
-
-              case 7:
               case "end":
                 return _context.stop();
             }

@@ -1,3 +1,5 @@
+import router from '../router';
+
 export default {
   namespaced: true,
   state() {
@@ -35,29 +37,41 @@ export default {
         commit('setLoading', true);
         const response = await axios.post('api/auth/' + data.route, data.form);
         const { token, user, message } = response.data;
+
         commit('setUser', user);
         commit('setToken', token);
         commit('notification/setMessage', message, { root: true });
+
+        router.push('chat')
       } catch (error) {
         const { errors, message } = error;
+
         commit('notification/setError', errors, { root: true });
         commit('notification/setMessage', message, { root: true });
+
       } finally {
+
         commit('setLoading', false);
       }
     },
     async logout({ dispatch, commit, getters, rootGetters }) {
       try {
         commit('setLoading', true);
+
         const response = await axios.get('api/auth/logout');
         const { message } = response.data;
+
         commit('setUser', {});
         commit('notification/setMessage', message, { root: true });
+
       } catch (error) {
         const { errors, message } = error;
+
         commit('notification/setError', errors, { root: true });
         commit('notification/setMessage', message, { root: true });
+
       } finally {
+        
         commit('setLoading', false);
       }
     }
