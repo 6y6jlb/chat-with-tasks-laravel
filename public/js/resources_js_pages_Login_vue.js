@@ -95,7 +95,6 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */ });
 /* harmony import */ var _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @babel/runtime/regenerator */ "./node_modules/@babel/runtime/regenerator/index.js");
 /* harmony import */ var _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0__);
-/* harmony import */ var _vue_runtime_core__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! @vue/runtime-core */ "./node_modules/@vue/runtime-core/dist/runtime-core.esm-bundler.js");
 /* harmony import */ var _components_auth_BasicAuthForm_vue__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../components/auth/BasicAuthForm.vue */ "./resources/js/components/auth/BasicAuthForm.vue");
 /* harmony import */ var _components_common_MainTitle_vue__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../components/common/MainTitle.vue */ "./resources/js/components/common/MainTitle.vue");
 
@@ -141,15 +140,6 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
                 return _this.$store.dispatch("essence/fetchUser", data);
 
               case 3:
-                _context.next = 5;
-                return (0,_vue_runtime_core__WEBPACK_IMPORTED_MODULE_3__.nextTick)();
-
-              case 5:
-                _this.$router.push({
-                  name: _this.isAuth ? "dashboard" : "home"
-                });
-
-              case 6:
               case "end":
                 return _context.stop();
             }

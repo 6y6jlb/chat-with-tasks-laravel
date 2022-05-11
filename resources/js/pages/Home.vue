@@ -9,6 +9,9 @@
 import ExampleComponent from "../components/ExampleComponent.vue";
 export default {
   name: "home-page",
+  mounted() {
+    axios.get('api/user').then(res=>console.log(res))
+  },
   components: {
     ExampleComponent,
   },

@@ -27,8 +27,6 @@ export default {
         route: "login",
       };
       await this.$store.dispatch("essence/fetchUser", data);
-      await nextTick();
-      this.$router.push({ name: this.isAuth ? "dashboard" : "home" });
     },
   },
 };

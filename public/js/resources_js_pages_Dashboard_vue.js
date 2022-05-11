@@ -12,10 +12,13 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
 /* harmony export */ });
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
-  name: 'dashboard',
+  name: "dashboard",
   mounted: function mounted() {
     !this.user && this.$router.push({
-      name: 'home'
+      name: "home"
+    });
+    axios.get("api/user").then(function (res) {
+      return console.log(res);
     });
   },
   data: function data() {
