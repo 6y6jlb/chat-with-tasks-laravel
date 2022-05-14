@@ -11,13 +11,15 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
 /* harmony export */ });
+/* harmony import */ var _request__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../request */ "./resources/js/request.js");
+
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
   name: "dashboard",
   mounted: function mounted() {
     !this.user && this.$router.push({
       name: "home"
     });
-    axios.get("api/user").then(function (res) {
+    _request__WEBPACK_IMPORTED_MODULE_0__["default"].get("user").then(function (res) {
       return console.log(res);
     });
   },
