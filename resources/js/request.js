@@ -2,11 +2,11 @@
 import axios from "axios"
 import store from "./store/index" // store is the Vuex store instance
 import router from "./router/index" // router is the Vue Router instance
-import { warn, warnDialogParse } from "utils/alerts" // helpers to show alerts and error messages
+import {PRIVATE_ROUTES} from "./router/private"
 
 // create an axios instance
 const service = axios.create({
-  baseURL: process.env.APP_BASE_API,
+  baseURL: '/api/',
   // withCredentials: true,
   timeout: 30000, // request timeout,
   // Flag to handle the error directly in the respose
@@ -26,12 +26,9 @@ service.interceptors.request.use(
     // If one of these specific pages that doesn't need a token, use current token (possibly none),
     // If NOT one of these specific, try to get the current token or request a new one
     if (
-      request.url.includes("login") ||
-      request.url.includes("logout") ||
-      request.url.includes("refresh") ||
-      request.url.includes("register")
+      Object.values(PRIVATE_ROUTES).find(route=>request.url.includes(route))
     ) {
-      const token = store.getters["auth/token"]
+      const token = await store.getters["essence/tokenGetter"]
       if (token) {
         request.headers["Authorization"] = `Bearer ${token}`
       }
@@ -75,7 +72,7 @@ service.interceptors.response.use(
     }
 
     if (status === 422 && handleErrorsHere && errorsArray) {
-      warnDialogParse(errorsArray)
+      commit('notification/setError', errorsArray, { root: true });
       return Promise.reject({
         message: null,
         status,
@@ -100,7 +97,7 @@ service.interceptors.response.use(
       (req.responseURL.includes("refresh") || req.responseURL.includes("logout"))
 
     if (isRefreshOrLogout || (status === 401 && error.config.__isRetryRequest)) {
-      await store.dispatch("auth/resetToken", null, { root: true })
+      await store.dispatch("essence/resetToken", null, { root: true })
       router.replace({ name: "login" })
       return Promise.reject({
         message,
@@ -110,14 +107,14 @@ service.interceptors.response.use(
     }
     // retry the request ONLY if not already tried
     if (isRefreshOrLogout || (status === 401 && !error.config.__isRetryRequest)) {
-      await store.dispatch("auth/refresh", null, { root: true })
+      await store.dispatch("essence/refresh", null, { root: true })
       error.config.__isRetryRequest = true
       return service.request(error.config)
     }
 
     // Check if it's server error:
     if (status >= 500) {
-      warn({ message: "Ocurrio un problema al procesar su petición" })
+      commit('notification/setMessage', "Ocurrio un problema al procesar su petición", { root: true });
     }
 
     return Promise.reject({
@@ -133,7 +130,7 @@ service.interceptors.response.use(
 async function getAuthToken() {
   return new Promise(async resolve => {
     // if the current token expires soon
-    const expiresIn = store.getters["auth/expiresIn"]
+    const expiresIn = store.getters["essence/expiresIn"]
     const expiresMinus15Minutes = new Date(+expiresIn)
 
     const minutesBefore = 60 * 15
@@ -143,15 +140,15 @@ async function getAuthToken() {
 
     const expiresDateMinus15Minutes = new Date(expiresMinus15Minutes)
     const isTokenExpiredOrAboutTo = expiresDateMinus15Minutes.getTime() <= Date.now()
-    let refreshed = store.state.auth.refreshed
+    let refreshed = store.state.essence.refreshed
 
     let token
     if (isTokenExpiredOrAboutTo && !refreshed) {
       console.log("tokenExpiredOrAboutTo")
       // refresh the token & update 'refreshed' flag in the store
-      token = await store.dispatch("auth/refresh", null, { root: true })
+      token = await store.dispatch("essence/refresh", null, { root: true })
     } else {
-      token = store.getters["auth/token"]
+      token = store.getters["essence/token"]
     }
 
     resolve(token)

@@ -6,11 +6,12 @@
 </template>
 
 <script>
+import service from '../request'
 export default {
   name: "dashboard",
   mounted() {
     !this.user && this.$router.push({ name: "home" });
-    axios.get("api/user").then((res) => console.log(res));
+    service.get("user").then((res) => console.log(res));
   },
   data() {
     return {

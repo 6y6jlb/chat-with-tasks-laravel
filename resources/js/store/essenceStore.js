@@ -1,3 +1,4 @@
+import service from '../request';
 import router from '../router';
 
 export default {
@@ -10,6 +11,7 @@ export default {
       },
       token: null,
       loading: false,
+      refreshed: false,
     }
   },
   mutations: {
@@ -35,7 +37,7 @@ export default {
     async fetchUser({ dispatch, commit, getters, rootGetters }, data) {
       try {
         commit('setLoading', true);
-        const response = await axios.post('api/auth/' + data.route, data.form);
+        const response = await service.post('/auth/' + data.route, data.form);
         const { token, user, message } = response.data;
 
         commit('setUser', user);
@@ -58,7 +60,7 @@ export default {
       try {
         commit('setLoading', true);
 
-        const response = await axios.get('api/auth/logout');
+        const response = await service.get('auth/logout');
         const { message } = response.data;
 
         commit('setUser', {});
@@ -74,6 +76,8 @@ export default {
         
         commit('setLoading', false);
       }
-    }
+    },
+    async refresh() {},
+    async resetToken() {},
   }
 }

@@ -23248,6 +23248,318 @@ window.Echo = new laravel_echo__WEBPACK_IMPORTED_MODULE_0__["default"]({
 
 /***/ }),
 
+/***/ "./resources/js/request.js":
+/*!*********************************!*\
+  !*** ./resources/js/request.js ***!
+  \*********************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
+/* harmony export */ });
+/* harmony import */ var _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @babel/runtime/regenerator */ "./node_modules/@babel/runtime/regenerator/index.js");
+/* harmony import */ var _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0__);
+/* harmony import */ var axios__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! axios */ "./node_modules/axios/index.js");
+/* harmony import */ var axios__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(axios__WEBPACK_IMPORTED_MODULE_1__);
+/* harmony import */ var _store_index__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./store/index */ "./resources/js/store/index.js");
+/* harmony import */ var _router_index__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./router/index */ "./resources/js/router/index.js");
+/* harmony import */ var _router_private__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ./router/private */ "./resources/js/router/private.js");
+
+
+function asyncGeneratorStep(gen, resolve, reject, _next, _throw, key, arg) { try { var info = gen[key](arg); var value = info.value; } catch (error) { reject(error); return; } if (info.done) { resolve(value); } else { Promise.resolve(value).then(_next, _throw); } }
+
+function _asyncToGenerator(fn) { return function () { var self = this, args = arguments; return new Promise(function (resolve, reject) { var gen = fn.apply(self, args); function _next(value) { asyncGeneratorStep(gen, resolve, reject, _next, _throw, "next", value); } function _throw(err) { asyncGeneratorStep(gen, resolve, reject, _next, _throw, "throw", err); } _next(undefined); }); }; }
+
+// import _ from "lodash"; // LODASH is imported and used globally, configured in webpack
+
+ // store is the Vuex store instance
+
+ // router is the Vue Router instance
+
+ // create an axios instance
+
+var service = axios__WEBPACK_IMPORTED_MODULE_1___default().create({
+  baseURL: '/api/',
+  // withCredentials: true,
+  timeout: 30000,
+  // request timeout,
+  // Flag to handle the error directly in the respose
+  __handleErrorsInResponse: true,
+  // validateStatus: status => status < 204, // Reject only if the status code is greater than or equal to 500
+  // Default Headers & empty data. Empty data is used because if it isn't present, this headers are not sent
+  headers: {
+    Accept: "application/json",
+    "Content-Type": "application/json"
+  },
+  data: {}
+}); // request interceptor
+
+service.interceptors.request.use( /*#__PURE__*/function () {
+  var _ref = _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default().mark(function _callee(request) {
+    var token, _token;
+
+    return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default().wrap(function _callee$(_context) {
+      while (1) {
+        switch (_context.prev = _context.next) {
+          case 0:
+            if (!Object.values(_router_private__WEBPACK_IMPORTED_MODULE_4__.PRIVATE_ROUTES).find(function (route) {
+              return request.url.includes(route);
+            })) {
+              _context.next = 7;
+              break;
+            }
+
+            _context.next = 3;
+            return _store_index__WEBPACK_IMPORTED_MODULE_2__["default"].getters["essence/tokenGetter"];
+
+          case 3:
+            token = _context.sent;
+
+            if (token) {
+              request.headers["Authorization"] = "Bearer ".concat(token);
+            }
+
+            _context.next = 17;
+            break;
+
+          case 7:
+            _context.prev = 7;
+            _context.next = 10;
+            return getAuthToken();
+
+          case 10:
+            _token = _context.sent;
+            request.headers["Authorization"] = "Bearer ".concat(_token);
+            _context.next = 17;
+            break;
+
+          case 14:
+            _context.prev = 14;
+            _context.t0 = _context["catch"](7);
+            throw new (axios__WEBPACK_IMPORTED_MODULE_1___default().Cancel)(_context.t0 || "No pudo refrescar el token :(");
+
+          case 17:
+            return _context.abrupt("return", request);
+
+          case 18:
+          case "end":
+            return _context.stop();
+        }
+      }
+    }, _callee, null, [[7, 14]]);
+  }));
+
+  return function (_x) {
+    return _ref.apply(this, arguments);
+  };
+}(), function (error) {
+  // Do something with request error
+  console.debug(error); // for debug
+
+  return Promise.reject(error);
+}); // response interceptor
+
+service.interceptors.response.use(function (response) {
+  return response;
+}, /*#__PURE__*/function () {
+  var _ref2 = _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default().mark(function _callee2(error) {
+    var req, message, status, errorData, handleErrorsHere, errorsArray, isRefreshOrLogout;
+    return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default().wrap(function _callee2$(_context2) {
+      while (1) {
+        switch (_context2.prev = _context2.next) {
+          case 0:
+            req = _.get(error, "request", undefined); // (error && error.request) || undefined
+
+            message = _.get(error, "response.data.message", "Ocurrio un problema al procesar su petición");
+            status = _.get(error, "response.status", undefined); // (error && error.response && error.response.status) || undefined
+
+            errorData = _.get(error, "response.data", undefined); // (error && error.response && error.response.data) || undefined
+            // Check if it was 'Unprocessable Entity' error and if it has to handle it here:
+
+            handleErrorsHere = _.get(error, "config.__handleErrorsInResponse", undefined); // (error && error.config && error.config.__handleErrorsInResponse) || false
+
+            errorsArray = _.get(error, "response.data.errors", undefined);
+
+            if (!errorsArray) {
+              errorsArray = _.get(error, "response.data.data.errors", undefined);
+            }
+
+            if (!(status === 422 && handleErrorsHere && errorsArray)) {
+              _context2.next = 10;
+              break;
+            }
+
+            commit('notification/setError', errorsArray, {
+              root: true
+            });
+            return _context2.abrupt("return", Promise.reject({
+              message: null,
+              status: status,
+              data: errorData
+            }));
+
+          case 10:
+            if (!(req !== undefined && req.responseURL.includes("login"))) {
+              _context2.next = 12;
+              break;
+            }
+
+            return _context2.abrupt("return", Promise.reject({
+              message: message,
+              status: status,
+              data: errorData
+            }));
+
+          case 12:
+            // TODO: ver de pasar esta logica al metodo del store auth/refresh
+            // If you can't refresh your token or you are sent Unauthorized on any request, reset token and go to login
+            isRefreshOrLogout = req !== undefined && (req.responseURL.includes("refresh") || req.responseURL.includes("logout"));
+
+            if (!(isRefreshOrLogout || status === 401 && error.config.__isRetryRequest)) {
+              _context2.next = 18;
+              break;
+            }
+
+            _context2.next = 16;
+            return _store_index__WEBPACK_IMPORTED_MODULE_2__["default"].dispatch("essence/resetToken", null, {
+              root: true
+            });
+
+          case 16:
+            _router_index__WEBPACK_IMPORTED_MODULE_3__["default"].replace({
+              name: "login"
+            });
+            return _context2.abrupt("return", Promise.reject({
+              message: message,
+              status: status,
+              data: errorData
+            }));
+
+          case 18:
+            if (!(isRefreshOrLogout || status === 401 && !error.config.__isRetryRequest)) {
+              _context2.next = 23;
+              break;
+            }
+
+            _context2.next = 21;
+            return _store_index__WEBPACK_IMPORTED_MODULE_2__["default"].dispatch("essence/refresh", null, {
+              root: true
+            });
+
+          case 21:
+            error.config.__isRetryRequest = true;
+            return _context2.abrupt("return", service.request(error.config));
+
+          case 23:
+            // Check if it's server error:
+            if (status >= 500) {
+              commit('notification/setMessage', "Ocurrio un problema al procesar su petición", {
+                root: true
+              });
+            }
+
+            return _context2.abrupt("return", Promise.reject({
+              message: message,
+              status: status,
+              data: errorData
+            }));
+
+          case 25:
+          case "end":
+            return _context2.stop();
+        }
+      }
+    }, _callee2);
+  }));
+
+  return function (_x2) {
+    return _ref2.apply(this, arguments);
+  };
+}()); // let refreshed = false
+// eslint-disable-next-line no-unused-vars
+
+function getAuthToken() {
+  return _getAuthToken.apply(this, arguments);
+}
+
+function _getAuthToken() {
+  _getAuthToken = _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default().mark(function _callee4() {
+    return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default().wrap(function _callee4$(_context4) {
+      while (1) {
+        switch (_context4.prev = _context4.next) {
+          case 0:
+            return _context4.abrupt("return", new Promise( /*#__PURE__*/function () {
+              var _ref3 = _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default().mark(function _callee3(resolve) {
+                var expiresIn, expiresMinus15Minutes, minutesBefore, expiresDateMinus15Minutes, isTokenExpiredOrAboutTo, refreshed, token;
+                return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default().wrap(function _callee3$(_context3) {
+                  while (1) {
+                    switch (_context3.prev = _context3.next) {
+                      case 0:
+                        // if the current token expires soon
+                        expiresIn = _store_index__WEBPACK_IMPORTED_MODULE_2__["default"].getters["essence/expiresIn"];
+                        expiresMinus15Minutes = new Date(+expiresIn);
+                        minutesBefore = 60 * 15; // const minutesBefore = 60 * 15
+
+                        // const minutesBefore = 60 * 15
+                        expiresMinus15Minutes.setSeconds(expiresMinus15Minutes.getSeconds() - minutesBefore); // returns unix 58
+
+                        // returns unix 58
+                        expiresDateMinus15Minutes = new Date(expiresMinus15Minutes);
+                        isTokenExpiredOrAboutTo = expiresDateMinus15Minutes.getTime() <= Date.now();
+                        refreshed = _store_index__WEBPACK_IMPORTED_MODULE_2__["default"].state.essence.refreshed;
+
+                        if (!(isTokenExpiredOrAboutTo && !refreshed)) {
+                          _context3.next = 14;
+                          break;
+                        }
+
+                        console.log("tokenExpiredOrAboutTo"); // refresh the token & update 'refreshed' flag in the store
+
+                        _context3.next = 11;
+                        return _store_index__WEBPACK_IMPORTED_MODULE_2__["default"].dispatch("essence/refresh", null, {
+                          root: true
+                        });
+
+                      case 11:
+                        token = _context3.sent;
+                        _context3.next = 15;
+                        break;
+
+                      case 14:
+                        token = _store_index__WEBPACK_IMPORTED_MODULE_2__["default"].getters["essence/token"];
+
+                      case 15:
+                        resolve(token);
+
+                      case 16:
+                      case "end":
+                        return _context3.stop();
+                    }
+                  }
+                }, _callee3);
+              }));
+
+              return function (_x3) {
+                return _ref3.apply(this, arguments);
+              };
+            }()));
+
+          case 1:
+          case "end":
+            return _context4.stop();
+        }
+      }
+    }, _callee4);
+  }));
+  return _getAuthToken.apply(this, arguments);
+}
+
+/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (service);
+
+/***/ }),
+
 /***/ "./resources/js/router/index.js":
 /*!**************************************!*\
   !*** ./resources/js/router/index.js ***!
@@ -23293,22 +23605,32 @@ function _arrayLikeToArray(arr, len) { if (len == null || len > arr.length) len 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "PRIVATE_ROUTES": () => (/* binding */ PRIVATE_ROUTES),
 /* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
 /* harmony export */ });
+var PRIVATE_ROUTES = {
+  ABOUT: 'about',
+  DASHBOARD: 'dashboard',
+  CHAT: 'chat',
+  MESSAGES: 'messages',
+  LOGOUT: 'logout',
+  REFRESH: 'resfresh',
+  USER: 'user'
+};
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ([{
-  path: '/about',
+  path: "/".concat(PRIVATE_ROUTES.ABOUT),
   component: function component() {
     return __webpack_require__.e(/*! import() */ "resources_js_pages_About_vue").then(__webpack_require__.bind(__webpack_require__, /*! ../pages/About.vue */ "./resources/js/pages/About.vue"));
   },
   name: 'about'
 }, {
-  path: '/',
+  path: "/".concat(PRIVATE_ROUTES.DASHBOARD),
   component: function component() {
     return __webpack_require__.e(/*! import() */ "resources_js_pages_Dashboard_vue").then(__webpack_require__.bind(__webpack_require__, /*! ../pages/Dashboard.vue */ "./resources/js/pages/Dashboard.vue"));
   },
   name: 'dashboard'
 }, {
-  path: '/chat',
+  path: "/".concat(PRIVATE_ROUTES.CHAT),
   component: function component() {
     return __webpack_require__.e(/*! import() */ "resources_js_pages_Chat_vue").then(__webpack_require__.bind(__webpack_require__, /*! ../pages/Chat.vue */ "./resources/js/pages/Chat.vue"));
   },
@@ -23386,6 +23708,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */ });
 /* harmony import */ var _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @babel/runtime/regenerator */ "./node_modules/@babel/runtime/regenerator/index.js");
 /* harmony import */ var _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0__);
+/* harmony import */ var _request__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../request */ "./resources/js/request.js");
 
 
 function asyncGeneratorStep(gen, resolve, reject, _next, _throw, key, arg) { try { var info = gen[key](arg); var value = info.value; } catch (error) { reject(error); return; } if (info.done) { resolve(value); } else { Promise.resolve(value).then(_next, _throw); } }
@@ -23409,6 +23732,7 @@ function _iterableToArray(iter) { if (typeof Symbol !== "undefined" && iter[Symb
 function _arrayWithoutHoles(arr) { if (Array.isArray(arr)) return _arrayLikeToArray(arr); }
 
 function _arrayLikeToArray(arr, len) { if (len == null || len > arr.length) len = arr.length; for (var i = 0, arr2 = new Array(len); i < len; i++) { arr2[i] = arr[i]; } return arr2; }
+
 
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
   namespaced: true,
@@ -23445,7 +23769,7 @@ function _arrayLikeToArray(arr, len) { if (len == null || len > arr.length) len 
           user = _ref2.user;
 
       try {
-        axios.post("api/message", {
+        axios.post("message", {
           message: message,
           user: user
         });
@@ -23483,13 +23807,7 @@ function _arrayLikeToArray(arr, len) { if (len == null || len > arr.length) len 
                 token = rootGetters['essence/tokenGetter'];
                 _context.prev = 2;
                 _context.next = 5;
-                return axios.create({
-                  baseURL: 'api/',
-                  headers: {
-                    'Content-Type': 'application/json',
-                    'Authorization': 'Bearer ' + token
-                  }
-                }).get("messages");
+                return _request__WEBPACK_IMPORTED_MODULE_1__["default"].get("messages");
 
               case 5:
                 response = _context.sent;
@@ -23546,12 +23864,14 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */ });
 /* harmony import */ var _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @babel/runtime/regenerator */ "./node_modules/@babel/runtime/regenerator/index.js");
 /* harmony import */ var _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0__);
-/* harmony import */ var _router__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../router */ "./resources/js/router/index.js");
+/* harmony import */ var _request__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../request */ "./resources/js/request.js");
+/* harmony import */ var _router__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../router */ "./resources/js/router/index.js");
 
 
 function asyncGeneratorStep(gen, resolve, reject, _next, _throw, key, arg) { try { var info = gen[key](arg); var value = info.value; } catch (error) { reject(error); return; } if (info.done) { resolve(value); } else { Promise.resolve(value).then(_next, _throw); } }
 
 function _asyncToGenerator(fn) { return function () { var self = this, args = arguments; return new Promise(function (resolve, reject) { var gen = fn.apply(self, args); function _next(value) { asyncGeneratorStep(gen, resolve, reject, _next, _throw, "next", value); } function _throw(err) { asyncGeneratorStep(gen, resolve, reject, _next, _throw, "throw", err); } _next(undefined); }); }; }
+
 
 
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
@@ -23563,7 +23883,8 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
         id: 0
       },
       token: null,
-      loading: false
+      loading: false,
+      refreshed: false
     };
   },
   mutations: {
@@ -23598,7 +23919,7 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
                 _context.prev = 1;
                 commit('setLoading', true);
                 _context.next = 5;
-                return axios.post('api/auth/' + data.route, data.form);
+                return _request__WEBPACK_IMPORTED_MODULE_1__["default"].post('/auth/' + data.route, data.form);
 
               case 5:
                 response = _context.sent;
@@ -23608,7 +23929,7 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
                 commit('notification/setMessage', message, {
                   root: true
                 });
-                _router__WEBPACK_IMPORTED_MODULE_1__["default"].push('chat');
+                _router__WEBPACK_IMPORTED_MODULE_2__["default"].push('chat');
                 _context.next = 18;
                 break;
 
@@ -23648,7 +23969,7 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
                 _context2.prev = 1;
                 commit('setLoading', true);
                 _context2.next = 5;
-                return axios.get('api/auth/logout');
+                return _request__WEBPACK_IMPORTED_MODULE_1__["default"].get('auth/logout');
 
               case 5:
                 response = _context2.sent;
@@ -23682,6 +24003,32 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
             }
           }
         }, _callee2, null, [[1, 11, 16, 19]]);
+      }))();
+    },
+    refresh: function refresh() {
+      return _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default().mark(function _callee3() {
+        return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default().wrap(function _callee3$(_context3) {
+          while (1) {
+            switch (_context3.prev = _context3.next) {
+              case 0:
+              case "end":
+                return _context3.stop();
+            }
+          }
+        }, _callee3);
+      }))();
+    },
+    resetToken: function resetToken() {
+      return _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default().mark(function _callee4() {
+        return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default().wrap(function _callee4$(_context4) {
+          while (1) {
+            switch (_context4.prev = _context4.next) {
+              case 0:
+              case "end":
+                return _context4.stop();
+            }
+          }
+        }, _callee4);
       }))();
     }
   }

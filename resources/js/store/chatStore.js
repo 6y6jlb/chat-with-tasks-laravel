@@ -1,3 +1,5 @@
+import service from "../request"
+
 export default {
     namespaced: true,
     state() {
@@ -30,7 +32,7 @@ export default {
         sendMessage({ dispatch, commit, getters, rootGetters }, { message, user }) {
             try {
                 axios
-                    .post(`api/message`, {
+                    .post(`message`, {
                         message: message,
                         user: user,
                     })
@@ -53,13 +55,7 @@ export default {
         async getMessages({ dispatch, commit, getters, rootGetters }) {
             const token = rootGetters['essence/tokenGetter'];
             try {
-                const response = await axios.create({
-                    baseURL: 'api/',
-                    headers: {
-                        'Content-Type': 'application/json',
-                        'Authorization': 'Bearer ' + token
-                    }
-                }).get(`messages`);
+                const response = await service.get(`messages`);
                 commit('setMessages', {messages: response.data.data, default: true});
             } catch (error) {
                 const { errors, message } = error;
