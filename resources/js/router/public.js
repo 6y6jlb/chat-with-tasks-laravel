@@ -1,27 +1,37 @@
+
+export const PUBLIC_ROUTES = {
+    HOME: 'home',
+    LOGIN: 'login',
+    CHAT: 'chat',
+    REGISTER: 'register',
+    ABOUT: 'about'
+};
+
+
 export default [
     {
-        path: '/',
+        path: `/${PUBLIC_ROUTES.HOME}`,
         component: () => import('../pages/Home.vue'),
         name: 'home'
     },
     {
-        path: '/login',
+        path: `/${PUBLIC_ROUTES.LOGIN}`,
         component: () => import('../pages/Login.vue'),
         name: 'login',
         label: 'sign in'
     },
     {
-        path: '/register',
+        path: `/${PUBLIC_ROUTES.REGISTER}`,
         component: () => import('../pages/Registration.vue'),
         name: 'register'
     },
     {
-        path: '/about',
+        path: `/${PUBLIC_ROUTES.ABOUT}`,
         component: () => import('../pages/About.vue'),
         name: 'about'
     },
     {
-        path: '/chat',
+        path: `/${PUBLIC_ROUTES.CHAT}`,
         component: () => import('../pages/Chat.vue'),
         name: 'chat'
     },

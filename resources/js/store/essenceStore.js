@@ -1,5 +1,6 @@
 import service from '../request';
 import router from '../router';
+import { PRIVATE_ROUTES } from '../router/private';
 
 export default {
   namespaced: true,
@@ -44,7 +45,7 @@ export default {
         commit('setToken', token);
         commit('notification/setMessage', message, { root: true });
 
-        router.push('chat')
+        router.push(PRIVATE_ROUTES.CHAT)
       } catch (error) {
         const { errors, message } = error;
 
@@ -59,8 +60,8 @@ export default {
     async logout({ dispatch, commit, getters, rootGetters }) {
       try {
         commit('setLoading', true);
-
-        const response = await service.get('auth/logout');
+        const user = getters['userGetter'];
+        const response = await service.get(`auth/logout/${user.id}`);
         const { message } = response.data;
 
         commit('setUser', {});
@@ -73,11 +74,11 @@ export default {
         commit('notification/setMessage', message, { root: true });
 
       } finally {
-        
+
         commit('setLoading', false);
       }
     },
-    async refresh() {},
-    async resetToken() {},
+    async refresh() { },
+    async resetToken() { },
   }
 }
