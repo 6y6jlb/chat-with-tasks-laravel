@@ -31,7 +31,7 @@ export default {
     actions: {
         sendMessage({ dispatch, commit, getters, rootGetters }, { message, user }) {
             try {
-                axios
+                service
                     .post(`message`, {
                         message: message,
                         user: user,
@@ -54,18 +54,19 @@ export default {
 
         async getMessages({ dispatch, commit, getters, rootGetters }) {
             const token = rootGetters['essence/tokenGetter'];
-            try {
-                const response = await service.get(`messages`);
-                commit('setMessages', {messages: response.data.data, default: true});
-            } catch (error) {
-                const { errors, message } = error;
-                commit('notification/setError', errors, { root: true });
-                commit('notification/setMessage', message, { root: true });
-            } finally {
-                if (!getters['echoGetter']) {
-                    dispatch('getEcho');
+            const isAuth = rootGetters['essence/userGetter'].id !== 0;
+            if (isAuth) {
+                try {
+                    const response = await service.get(`messages`);
+                    commit('setMessages', {messages: response.data.data, default: true});
+                } catch (error) {
+                    const { errors, message } = error;
+                    commit('notification/setError', errors, { root: true });
+                    commit('notification/setMessage', message, { root: true });
                 }
-
+            }
+            if (!getters['echoGetter']) {
+                dispatch('getEcho');
             }
         },
     }

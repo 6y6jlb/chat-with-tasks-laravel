@@ -23658,35 +23658,43 @@ var PRIVATE_ROUTES = {
 "use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "PUBLIC_ROUTES": () => (/* binding */ PUBLIC_ROUTES),
 /* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
 /* harmony export */ });
+var PUBLIC_ROUTES = {
+  HOME: 'home',
+  LOGIN: 'login',
+  CHAT: 'chat',
+  REGISTER: 'register',
+  ABOUT: 'about'
+};
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ([{
-  path: '/',
+  path: "/".concat(PUBLIC_ROUTES.HOME),
   component: function component() {
     return __webpack_require__.e(/*! import() */ "resources_js_pages_Home_vue").then(__webpack_require__.bind(__webpack_require__, /*! ../pages/Home.vue */ "./resources/js/pages/Home.vue"));
   },
   name: 'home'
 }, {
-  path: '/login',
+  path: "/".concat(PUBLIC_ROUTES.LOGIN),
   component: function component() {
     return __webpack_require__.e(/*! import() */ "resources_js_pages_Login_vue").then(__webpack_require__.bind(__webpack_require__, /*! ../pages/Login.vue */ "./resources/js/pages/Login.vue"));
   },
   name: 'login',
   label: 'sign in'
 }, {
-  path: '/register',
+  path: "/".concat(PUBLIC_ROUTES.REGISTER),
   component: function component() {
     return __webpack_require__.e(/*! import() */ "resources_js_pages_Registration_vue").then(__webpack_require__.bind(__webpack_require__, /*! ../pages/Registration.vue */ "./resources/js/pages/Registration.vue"));
   },
   name: 'register'
 }, {
-  path: '/about',
+  path: "/".concat(PUBLIC_ROUTES.ABOUT),
   component: function component() {
     return __webpack_require__.e(/*! import() */ "resources_js_pages_About_vue").then(__webpack_require__.bind(__webpack_require__, /*! ../pages/About.vue */ "./resources/js/pages/About.vue"));
   },
   name: 'about'
 }, {
-  path: '/chat',
+  path: "/".concat(PUBLIC_ROUTES.CHAT),
   component: function component() {
     return __webpack_require__.e(/*! import() */ "resources_js_pages_Chat_vue").then(__webpack_require__.bind(__webpack_require__, /*! ../pages/Chat.vue */ "./resources/js/pages/Chat.vue"));
   },
@@ -23769,7 +23777,7 @@ function _arrayLikeToArray(arr, len) { if (len == null || len > arr.length) len 
           user = _ref2.user;
 
       try {
-        axios.post("message", {
+        _request__WEBPACK_IMPORTED_MODULE_1__["default"].post("message", {
           message: message,
           user: user
         });
@@ -23798,29 +23806,36 @@ function _arrayLikeToArray(arr, len) { if (len == null || len > arr.length) len 
     },
     getMessages: function getMessages(_ref4) {
       return _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default().mark(function _callee() {
-        var dispatch, commit, getters, rootGetters, token, response, errors, message;
+        var dispatch, commit, getters, rootGetters, token, isAuth, response, errors, message;
         return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default().wrap(function _callee$(_context) {
           while (1) {
             switch (_context.prev = _context.next) {
               case 0:
                 dispatch = _ref4.dispatch, commit = _ref4.commit, getters = _ref4.getters, rootGetters = _ref4.rootGetters;
                 token = rootGetters['essence/tokenGetter'];
-                _context.prev = 2;
-                _context.next = 5;
+                isAuth = rootGetters['essence/userGetter'].id !== 0;
+
+                if (!isAuth) {
+                  _context.next = 16;
+                  break;
+                }
+
+                _context.prev = 4;
+                _context.next = 7;
                 return _request__WEBPACK_IMPORTED_MODULE_1__["default"].get("messages");
 
-              case 5:
+              case 7:
                 response = _context.sent;
                 commit('setMessages', {
                   messages: response.data.data,
                   "default": true
                 });
-                _context.next = 14;
+                _context.next = 16;
                 break;
 
-              case 9:
-                _context.prev = 9;
-                _context.t0 = _context["catch"](2);
+              case 11:
+                _context.prev = 11;
+                _context.t0 = _context["catch"](4);
                 errors = _context.t0.errors, message = _context.t0.message;
                 commit('notification/setError', errors, {
                   root: true
@@ -23829,21 +23844,17 @@ function _arrayLikeToArray(arr, len) { if (len == null || len > arr.length) len 
                   root: true
                 });
 
-              case 14:
-                _context.prev = 14;
-
+              case 16:
                 if (!getters['echoGetter']) {
                   dispatch('getEcho');
                 }
-
-                return _context.finish(14);
 
               case 17:
               case "end":
                 return _context.stop();
             }
           }
-        }, _callee, null, [[2, 9, 14, 17]]);
+        }, _callee, null, [[4, 11]]);
       }))();
     }
   }
@@ -23866,11 +23877,13 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0__);
 /* harmony import */ var _request__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../request */ "./resources/js/request.js");
 /* harmony import */ var _router__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../router */ "./resources/js/router/index.js");
+/* harmony import */ var _router_private__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ../router/private */ "./resources/js/router/private.js");
 
 
 function asyncGeneratorStep(gen, resolve, reject, _next, _throw, key, arg) { try { var info = gen[key](arg); var value = info.value; } catch (error) { reject(error); return; } if (info.done) { resolve(value); } else { Promise.resolve(value).then(_next, _throw); } }
 
 function _asyncToGenerator(fn) { return function () { var self = this, args = arguments; return new Promise(function (resolve, reject) { var gen = fn.apply(self, args); function _next(value) { asyncGeneratorStep(gen, resolve, reject, _next, _throw, "next", value); } function _throw(err) { asyncGeneratorStep(gen, resolve, reject, _next, _throw, "throw", err); } _next(undefined); }); }; }
+
 
 
 
@@ -23929,7 +23942,7 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
                 commit('notification/setMessage', message, {
                   root: true
                 });
-                _router__WEBPACK_IMPORTED_MODULE_2__["default"].push('chat');
+                _router__WEBPACK_IMPORTED_MODULE_2__["default"].push(_router_private__WEBPACK_IMPORTED_MODULE_3__.PRIVATE_ROUTES.CHAT);
                 _context.next = 18;
                 break;
 
@@ -23959,7 +23972,7 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
     },
     logout: function logout(_ref2) {
       return _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default().mark(function _callee2() {
-        var dispatch, commit, getters, rootGetters, response, message, errors, _message2;
+        var dispatch, commit, getters, rootGetters, user, response, message, errors, _message2;
 
         return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default().wrap(function _callee2$(_context2) {
           while (1) {
@@ -23968,21 +23981,22 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
                 dispatch = _ref2.dispatch, commit = _ref2.commit, getters = _ref2.getters, rootGetters = _ref2.rootGetters;
                 _context2.prev = 1;
                 commit('setLoading', true);
-                _context2.next = 5;
-                return _request__WEBPACK_IMPORTED_MODULE_1__["default"].get('auth/logout');
+                user = getters['userGetter'];
+                _context2.next = 6;
+                return _request__WEBPACK_IMPORTED_MODULE_1__["default"].get("auth/logout/".concat(user.id));
 
-              case 5:
+              case 6:
                 response = _context2.sent;
                 message = response.data.message;
                 commit('setUser', {});
                 commit('notification/setMessage', message, {
                   root: true
                 });
-                _context2.next = 16;
+                _context2.next = 17;
                 break;
 
-              case 11:
-                _context2.prev = 11;
+              case 12:
+                _context2.prev = 12;
                 _context2.t0 = _context2["catch"](1);
                 errors = _context2.t0.errors, _message2 = _context2.t0.message;
                 commit('notification/setError', errors, {
@@ -23992,17 +24006,17 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
                   root: true
                 });
 
-              case 16:
-                _context2.prev = 16;
+              case 17:
+                _context2.prev = 17;
                 commit('setLoading', false);
-                return _context2.finish(16);
+                return _context2.finish(17);
 
-              case 19:
+              case 20:
               case "end":
                 return _context2.stop();
             }
           }
-        }, _callee2, null, [[1, 11, 16, 19]]);
+        }, _callee2, null, [[1, 12, 17, 20]]);
       }))();
     },
     refresh: function refresh() {
