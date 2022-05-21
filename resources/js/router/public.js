@@ -1,6 +1,6 @@
 
 export const PUBLIC_ROUTES = {
-    HOME: 'home',
+    HOME: '',
     LOGIN: 'login',
     CHAT: 'chat',
     REGISTER: 'register',

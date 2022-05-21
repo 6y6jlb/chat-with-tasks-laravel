@@ -1,7 +1,7 @@
 
 export const PRIVATE_ROUTES = {
-    ABOUT: 'about',
     DASHBOARD: 'dashboard',
+    ABOUT: 'about',
     CHAT: 'chat',
     MESSAGES: 'messages',
     LOGOUT: 'logout',

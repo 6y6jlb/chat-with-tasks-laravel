@@ -23609,8 +23609,8 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
 /* harmony export */ });
 var PRIVATE_ROUTES = {
-  ABOUT: 'about',
   DASHBOARD: 'dashboard',
+  ABOUT: 'about',
   CHAT: 'chat',
   MESSAGES: 'messages',
   LOGOUT: 'logout',
@@ -23662,7 +23662,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
 /* harmony export */ });
 var PUBLIC_ROUTES = {
-  HOME: 'home',
+  HOME: '',
   LOGIN: 'login',
   CHAT: 'chat',
   REGISTER: 'register',
