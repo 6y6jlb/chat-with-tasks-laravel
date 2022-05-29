@@ -23875,14 +23875,17 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */ });
 /* harmony import */ var _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @babel/runtime/regenerator */ "./node_modules/@babel/runtime/regenerator/index.js");
 /* harmony import */ var _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0__);
-/* harmony import */ var _request__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../request */ "./resources/js/request.js");
-/* harmony import */ var _router__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../router */ "./resources/js/router/index.js");
-/* harmony import */ var _router_private__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ../router/private */ "./resources/js/router/private.js");
+/* harmony import */ var axios__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! axios */ "./node_modules/axios/index.js");
+/* harmony import */ var axios__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(axios__WEBPACK_IMPORTED_MODULE_1__);
+/* harmony import */ var _request__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../request */ "./resources/js/request.js");
+/* harmony import */ var _router__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ../router */ "./resources/js/router/index.js");
+/* harmony import */ var _router_private__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ../router/private */ "./resources/js/router/private.js");
 
 
 function asyncGeneratorStep(gen, resolve, reject, _next, _throw, key, arg) { try { var info = gen[key](arg); var value = info.value; } catch (error) { reject(error); return; } if (info.done) { resolve(value); } else { Promise.resolve(value).then(_next, _throw); } }
 
 function _asyncToGenerator(fn) { return function () { var self = this, args = arguments; return new Promise(function (resolve, reject) { var gen = fn.apply(self, args); function _next(value) { asyncGeneratorStep(gen, resolve, reject, _next, _throw, "next", value); } function _throw(err) { asyncGeneratorStep(gen, resolve, reject, _next, _throw, "throw", err); } _next(undefined); }); }; }
+
 
 
 
@@ -23932,7 +23935,7 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
                 _context.prev = 1;
                 commit('setLoading', true);
                 _context.next = 5;
-                return _request__WEBPACK_IMPORTED_MODULE_1__["default"].post('/auth/' + data.route, data.form);
+                return _request__WEBPACK_IMPORTED_MODULE_2__["default"].post('/auth/' + data.route, data.form);
 
               case 5:
                 response = _context.sent;
@@ -23942,7 +23945,7 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
                 commit('notification/setMessage', message, {
                   root: true
                 });
-                _router__WEBPACK_IMPORTED_MODULE_2__["default"].push(_router_private__WEBPACK_IMPORTED_MODULE_3__.PRIVATE_ROUTES.CHAT);
+                _router__WEBPACK_IMPORTED_MODULE_3__["default"].push(_router_private__WEBPACK_IMPORTED_MODULE_4__.PRIVATE_ROUTES.CHAT);
                 _context.next = 18;
                 break;
 
@@ -23983,7 +23986,7 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
                 commit('setLoading', true);
                 user = getters['userGetter'];
                 _context2.next = 6;
-                return _request__WEBPACK_IMPORTED_MODULE_1__["default"].get("auth/logout/".concat(user.id));
+                return _request__WEBPACK_IMPORTED_MODULE_2__["default"].get("auth/logout/".concat(user.id));
 
               case 6:
                 response = _context2.sent;
